@@ -3,4 +3,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="default_header_rank">rank : 2</string>
+    <string name="default_header_age">21 ans</string>
+    <string name="default_header_name">player\'s name sdfq</string>
+    <string name="history_list_title">Last Matches</string>
 </resources>

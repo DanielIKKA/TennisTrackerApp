@@ -6,6 +6,8 @@
     <dimen name="text_level2">22sp</dimen>
     <dimen name="text_level_paragraph">18sp</dimen>
 
-    <dimen name="fragment_profile_height">300dp</dimen>
-    <dimen name="margin_top_list">290dp</dimen>
+    <dimen name="fragment_profile_height">150dp</dimen>
+    <dimen name="margin_top_list">140dp</dimen>
+
+    <dimen name="corner_radius_cell">50dp</dimen>
 </resources>
