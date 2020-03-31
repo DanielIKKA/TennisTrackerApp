@@ -11,7 +11,12 @@ import com.android.tennistrackerapp.R;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-
+/*
+ * Resources :
+ *  - https://developer.android.com/guide/topics/ui/layout/recyclerview
+ *  - https://openclassrooms.com/fr/courses/3499366-developpez-une-application-pour-android/3568556-affichez-des-listes-avec-recyclerview
+ *  - https://www.youtube.com/watch?v=fxVeFwtIpVc
+ */
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomViewHolder> {
 
     private String[] mDataset;
