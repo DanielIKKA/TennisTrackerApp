@@ -52,7 +52,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     public CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // create a new generic cell
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.cell_history, parent, false);
+                .inflate(R.layout.fragment_home_cell_history, parent, false);
 
         CustomViewHolder vh = new CustomViewHolder(v);
         return vh;
@@ -66,6 +66,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
 
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        return 5;
     }
 }

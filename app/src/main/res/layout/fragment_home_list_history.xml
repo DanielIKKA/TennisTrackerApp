@@ -13,7 +13,7 @@
         android:layout_width="0dp"
         android:layout_height="5dp"
 
-        android:background="@drawable/line_bold"
+        android:background="@drawable/line_bold_dark"
 
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,8 +27,7 @@
         android:layout_height="wrap_content"
 
         android:text="@string/history_list_title"
-        android:textSize="@dimen/text_level2"
-        android:textStyle="bold"
+       style="@style/TextAppearance.AppCompat.Headline"
         android:gravity="center_horizontal"
 
         app:layout_constraintTop_toBottomOf="@+id/recycle_line"

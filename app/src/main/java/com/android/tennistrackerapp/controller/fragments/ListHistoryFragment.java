@@ -17,13 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ListHistoryFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-
-    // TODO: Rename and change types of parameters
-
-
-    private RecyclerView mRv;
     private AppCompatButton mBtnMore;
 
     /**
@@ -37,11 +30,9 @@ public class ListHistoryFragment extends Fragment {
      *
      * @return A new instance of fragment HeaderProfilFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static ListHistoryFragment newInstance() {
         ListHistoryFragment fragment = new ListHistoryFragment();
         Bundle args = new Bundle();
-
         fragment.setArguments(args);
         return fragment;
     }
@@ -49,24 +40,21 @@ public class ListHistoryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            //mParam1 = getArguments().getString(ARG_PARAM1);
-            //mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        if (getArguments() != null) {}
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v =  inflater.inflate(R.layout.fragment_list_history, container, false);
+        View v =  inflater.inflate(R.layout.fragment_home_list_history, container, false);
 
-        this.mRv = v.findViewById(R.id.recyclerView_main);
+        RecyclerView rv = v.findViewById(R.id.recyclerView_main);
 
         //RecycleView
         //1- Layout Manager will manage displaying on screen, there it will be a vertical list
-       this.mRv.setLayoutManager(new LinearLayoutManager(v.getContext(), RecyclerView.VERTICAL, false));
+       rv.setLayoutManager(new LinearLayoutManager(v.getContext(), RecyclerView.VERTICAL, false));
         //2- The Adapter will manage content on each cell, it is a custom Class which extends of Adapter
-        this.mRv.setAdapter(new CustomAdapter(new String[]{
+        rv.setAdapter(new CustomAdapter(new String[]{
                 "Roger\nLieu - 07/07/2019",
                 "Nadal\nLieu - 07/07/2019",
                 "Roger\nLieu - 07/07/2019",
