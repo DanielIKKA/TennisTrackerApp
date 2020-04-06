@@ -1,10 +1,12 @@
 package com.android.tennistrackerapp.model.dao;
 
 
-import com.android.tennistrackerapp.model.Player;
+import com.android.tennistrackerapp.model.Match;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -12,23 +14,23 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 @Dao
-public interface PlayerDAO {
+public interface MatchDAO {
 
-    @Query("SELECT * FROM player")
-    ArrayList<Player> getAll();
+    @Query("SELECT * FROM matches")
+    LiveData<List<Match>> getAll();
 
-    @Query("SELECT * FROM player WHERE id = :userId")
-    ArrayList<Player> getById(long userId);
-
-    @Insert
-    long createOne(Player player);
+    @Query("SELECT * FROM matches WHERE id = :matchId")
+    LiveData<List<Match>> getById(long matchId);
 
     @Insert
-    void insertAll(Player... players);
+    long createOne(Match match);
+
+    @Insert
+    void insertAll(Match... matches);
 
     @Update
-    long update(Player player);
+    int update(Match match);
 
     @Delete
-    void delete(Player player);
+    void delete(Match match);
 }

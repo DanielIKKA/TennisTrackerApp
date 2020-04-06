@@ -1,15 +1,12 @@
 package com.android.tennistrackerapp.model;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Build;
+import android.provider.ContactsContract;
 
 import com.android.tennistrackerapp.model.dao.MatchDAO;
 import com.android.tennistrackerapp.model.dao.MatchStatDAO;
 import com.android.tennistrackerapp.model.dao.PlayerDAO;
 
-import androidx.annotation.Nullable;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
@@ -18,6 +15,7 @@ import androidx.room.RoomDatabase;
  * References
  * https://developer.android.com/training/data-storage/room
  **/
+
 @Database(entities = {Player.class, Match.class, MatchStat.class}, version = 1, exportSchema = false)
 public abstract class DatabaseManager extends RoomDatabase {
 

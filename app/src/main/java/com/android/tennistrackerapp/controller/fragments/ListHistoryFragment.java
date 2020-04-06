@@ -7,6 +7,10 @@ import android.view.ViewGroup;
 
 import com.android.tennistrackerapp.R;
 import com.android.tennistrackerapp.controller.CustomAdapter;
+import com.android.tennistrackerapp.model.Match;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,30 +21,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ListHistoryFragment extends Fragment {
 
-    private AppCompatButton mBtnMore;
-
     /**
      * It's require to have a public empty constructor
      */
     public ListHistoryFragment() {}
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment HeaderProfilFragment.
-     */
-    public static ListHistoryFragment newInstance() {
-        ListHistoryFragment fragment = new ListHistoryFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {}
     }
 
     @Nullable
@@ -53,17 +41,14 @@ public class ListHistoryFragment extends Fragment {
         //RecycleView
         //1- Layout Manager will manage displaying on screen, there it will be a vertical list
        rv.setLayoutManager(new LinearLayoutManager(v.getContext(), RecyclerView.VERTICAL, false));
-        //2- The Adapter will manage content on each cell, it is a custom Class which extends of Adapter
-        rv.setAdapter(new CustomAdapter(new String[]{
-                "Roger\nLieu - 07/07/2019",
-                "Nadal\nLieu - 07/07/2019",
-                "Roger\nLieu - 07/07/2019",
-                "Nadal\nLieu - 07/07/2019",
-                "Roger\nLieu - 07/07/2019",
-                "Nadal\nLieu - 07/07/2019"}));
+
+       //2- The Adapter will manage content on each cell, it is a custom Class which extends of Adapter
+        ArrayList data = new ArrayList<Match>();
+        data.add(Match.getInstance());
+        data.add(Match.getInstance());
+        data.add(Match.getInstance());
+        rv.setAdapter(new CustomAdapter(data));
 
         return v;
     }
-
-    public AppCompatButton getBtnMore() { return mBtnMore; }
 }

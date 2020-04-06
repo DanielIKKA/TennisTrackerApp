@@ -1,29 +1,36 @@
 package com.android.tennistrackerapp.controller.activities;
 
-import android.content.pm.ShortcutManager;
 import android.os.Bundle;
-import android.transition.TransitionManager;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.android.tennistrackerapp.R;
 import com.android.tennistrackerapp.controller.fragments.HomeFragment;
+import com.android.tennistrackerapp.model.DatabaseManager;
+import com.android.tennistrackerapp.model.Player;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.concurrent.Executor;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    // ---------------------
+    // DESIGN COMPONENTS
+    // ---------------------
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+
+    // ---------------------
+    // ATTRIBUTE
+    // ---------------------
+    private DatabaseManager dbManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +44,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //FragmentManager
         configFrameLayout();
+
+        //Database
+        this.dbManager = DatabaseManager.getInstance(this);
+        
     }
 
     @Override
