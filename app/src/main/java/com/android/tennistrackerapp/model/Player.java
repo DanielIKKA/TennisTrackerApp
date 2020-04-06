@@ -1,20 +1,25 @@
 package com.android.tennistrackerapp.model;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
-@Entity(tableName = "players")
+@DatabaseTable(tableName = "players")
 public class Player {
 
-    @PrimaryKey(autoGenerate = true)
+    @DatabaseField(id = true, generatedId = true, canBeNull = false)
     private long id;
+    @DatabaseField(canBeNull = false)
     private String name;
+    @DatabaseField
     private int rank;
+    @DatabaseField
     private String picture;
 
     // ----------------
     // CONSTRUCTOR
     // ----------------
+
+    public Player() {}
     public Player(String name, int rank, String picture) {
         this.name = name;
         this.rank = rank;

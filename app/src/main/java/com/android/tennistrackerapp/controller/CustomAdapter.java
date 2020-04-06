@@ -8,15 +8,13 @@ import android.widget.TextView;
 
 import com.android.tennistrackerapp.R;
 import com.android.tennistrackerapp.model.Match;
-import com.android.tennistrackerapp.model.MatchStat;
 import com.android.tennistrackerapp.model.Player;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 /*
@@ -53,8 +51,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
 
             String winner = player1.getName();
             String looser = player2.getName();
-            String dateToStr = data.getDate();
-            String location = data.getLocation().toString();
+            Date dateToStr = data.getDate();
+            String location = data.getLocation() == null ? "N/A" : data.getLocation().toString();
 
             this.title.setText(MessageFormat.format("{0} - {1}\n{2} - {3}", winner, looser, location, dateToStr));
         }

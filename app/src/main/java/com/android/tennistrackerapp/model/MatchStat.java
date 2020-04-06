@@ -1,18 +1,17 @@
 package com.android.tennistrackerapp.model;
 
-import androidx.room.Entity;
-import androidx.room.ForeignKey;
-import androidx.room.PrimaryKey;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
-@Entity(tableName = "statistics")
+@DatabaseTable(tableName = "statistics")
 public class MatchStat {
 
-    @PrimaryKey(autoGenerate = true)
-    private long id;
-    @ForeignKey(entity = Match.class, parentColumns = "id", childColumns = "id_match")
-    private long id_match;
-    @ForeignKey(entity = Player.class, parentColumns = "id", childColumns = "id_user")
-    private long id_player;
+    @DatabaseField(id = true, generatedId = true, canBeNull = false)
+    private int id;
+    @DatabaseField(foreign = true, canBeNull = false, columnName = "id_match", uniqueCombo = true)
+    private Match match;
+    @DatabaseField(foreign = true, canBeNull = false, columnName = "id_player", uniqueCombo = true)
+    private Player player;
 
     private int nbDoubleFault;
     private float percentFirstService;
@@ -25,9 +24,10 @@ public class MatchStat {
     // ----------------
     // CONSTRUCTOR
     // ----------------
-    public MatchStat(long id_match, long id_player, int nbDoubleFault, float percentFirstService, float percentSecondService, int nbBreakBalls, int nbWinPoint, int nbWinGame, int maxGameSeries) {
-        this.id_match = id_match;
-        this.id_player = id_player;
+    public MatchStat(){}
+    public MatchStat(Match id_match, Player id_player, int nbDoubleFault, float percentFirstService, float percentSecondService, int nbBreakBalls, int nbWinPoint, int nbWinGame, int maxGameSeries) {
+        this.match = id_match;
+        this.player = id_player;
         this.nbDoubleFault = nbDoubleFault;
         this.percentFirstService = percentFirstService;
         this.percentSecondService = percentSecondService;
@@ -40,9 +40,9 @@ public class MatchStat {
     // ----------------
     // GETTERS
     // ----------------
-    public long getId() { return id; }
-    public long getId_match() { return id_match; }
-    public long getId_player() { return id_player; }
+    public int getId() { return id; }
+    public Match getId_match() { return match; }
+    public Player getId_player() { return player; }
     public int getNbDoubleFault() { return nbDoubleFault; }
     public float getPercentFirstService() { return percentFirstService; }
     public float getPercentSecondService() { return percentSecondService; }
@@ -54,9 +54,9 @@ public class MatchStat {
     // ----------------
     // SETTERS
     // ----------------
-    public void setId(long id) { this.id = id; }
-    public void setId_match(long id_match) { this.id_match = id_match; }
-    public void setId_player(long id_player) { this.id_player = id_player; }
+    public void setId(int id) { this.id = id; }
+    public void setId_match(Match id_match) { this.match = id_match; }
+    public void setId_player(Player id_player) { this.player = id_player; }
     public void setNbDoubleFault(int nbDoubleFault) { this.nbDoubleFault = nbDoubleFault; }
     public void setPercentFirstService(float percentFirstService) { this.percentFirstService = percentFirstService; }
     public void setPercentSecondService(float percentSecondService) { this.percentSecondService = percentSecondService; }

@@ -1,43 +1,33 @@
 package com.android.tennistrackerapp.model;
 
+import com.j256.ormlite.field.DataType;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import java.io.Serializable;
+import java.util.Date;
 
-import androidx.room.Embedded;
-import androidx.room.Entity;
-import androidx.room.ForeignKey;
-import androidx.room.PrimaryKey;
-
-@Entity(tableName = "matches")
+@DatabaseTable(tableName = "matches")
 public class Match {
 
-    @PrimaryKey(autoGenerate = true)
+    @DatabaseField(id = true, generatedId = true, canBeNull = false)
     private long id;
-    @ForeignKey(entity = Player.class, parentColumns = "id", childColumns = "winner_player_id")
-    private long winner_player_id;
-    @ForeignKey(entity = Player.class, parentColumns = "id", childColumns = "looser_player_id")
-    private long looser_player_id;
-    private String date;
-    @Embedded
+    @DatabaseField(foreign = true, canBeNull = false, columnName = "id_winner_player")
+    private Player winner;
+    @DatabaseField(foreign = true, canBeNull = false, columnName = "id_looser_player")
+    private Player looser;
+    @DatabaseField
+    private Date date;
+    @DatabaseField(dataType = DataType.SERIALIZABLE, useGetSet = true)
     private Location location;
-
-    // ----------------
-    // DEFAULT VALUES
-    // ----------------
-    private static final long DEFAULT_ID_PLAYER_1 = 1;
-    private static final long DEFAULT_ID_PLAYER_2 = 2;
-    private static final String DEFAULT_DATE = "06/04/2020";
-    private static final Location DEFAULT_LOCATION = Location.getDefaultInstance();
 
     // ----------------
     // CONSTRUCTORS
     // ----------------
-    public static Match getInstance() {
-        return new Match(DEFAULT_ID_PLAYER_1, DEFAULT_ID_PLAYER_2, DEFAULT_DATE, DEFAULT_LOCATION);
-    }
-
-    public Match(long winner_player_id, long looser_player_id, String date, Location location) {
-        this.winner_player_id = winner_player_id;
-        this.looser_player_id = looser_player_id;
+    public Match(){}
+    public Match(Player winner, Player looser, Date date, Location location) {
+        this.winner = winner;
+        this.looser = looser;
         this.date = date;
         this.location = location;
     }
@@ -50,13 +40,12 @@ public class Match {
         private static final double DEFAULT_LONG = 2.3488;
         private static final double DEFAULT_LAT = 48.8534;
 
-        private double longitude;
-        private double latitude;
-
+        private Double longitude;
+        private Double latitude;
 
         private static final Location DEFAULT_INSTANCE = new Location(DEFAULT_LONG, DEFAULT_LAT);
 
-        public Location(double longitude, double latitude) {
+        public Location(Double longitude, Double latitude) {
             this.longitude = longitude;
             this.latitude = latitude;
         }
@@ -66,8 +55,8 @@ public class Match {
         // ----------------
         // GETTERS
         // ----------------
-        public double getLongitude() { return longitude; }
-        public double getLatitude() { return latitude; }
+        public Double getLongitude() { return longitude; }
+        public Double getLatitude() { return latitude; }
 
         // ----------------
         // SETTERS
@@ -80,10 +69,8 @@ public class Match {
         // ----------------
 
         public String toString() {
-            return "Location{" +
-                    "long=" + longitude +
-                    ", lat=" + latitude +
-                    '}';
+
+            return this.equals(null) ? "N/A" : String.format("({0} ; {1})", this.latitude.toString(), this.longitude.toString());
         }
     }
 
@@ -91,9 +78,9 @@ public class Match {
     // GETTERS
     // ----------------
     public long getId() { return id; }
-    public long getWinner_player_id() { return winner_player_id; }
-    public long getLooser_player_id() { return looser_player_id; }
-    public String getDate() { return date; }
+    public Player getWinner() { return winner; }
+    public Player getLooser() { return looser; }
+    public Date getDate() { return date; }
     public Location getLocation() { return location; }
 
 
@@ -101,8 +88,8 @@ public class Match {
     // SETTERS
     // ----------------
     public void setId(long id) { this.id = id; }
-    public void setWinner_player_id(long winner_player_id) { this.winner_player_id = winner_player_id; }
-    public void setLooser_player_id(long looser_player_id) { this.looser_player_id = looser_player_id; }
-    public void setDate(String date) { this.date = date; }
+    public void setWinner(Player winner) { this.winner = winner; }
+    public void setLooser(Player looser) { this.looser = looser; }
+    public void setDate(Date date) { this.date = date; }
     public void setLocation(Location location) { this.location = location; }
 }

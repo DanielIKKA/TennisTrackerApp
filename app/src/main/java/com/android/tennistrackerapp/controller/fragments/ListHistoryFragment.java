@@ -10,11 +10,9 @@ import com.android.tennistrackerapp.controller.CustomAdapter;
 import com.android.tennistrackerapp.model.Match;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,9 +42,9 @@ public class ListHistoryFragment extends Fragment {
 
        //2- The Adapter will manage content on each cell, it is a custom Class which extends of Adapter
         ArrayList data = new ArrayList<Match>();
-        data.add(Match.getInstance());
-        data.add(Match.getInstance());
-        data.add(Match.getInstance());
+        data.add(new Match());
+        data.add(new Match());
+        data.add(new Match());
         rv.setAdapter(new CustomAdapter(data));
 
         return v;
