@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomViewHolder> {
 
-    private String[] mDataset;
+    private String[] data;
 
     // Provide a reference to the views for each data item (cell)
     // Complex data items may need more than one view per item, and
@@ -44,7 +44,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public CustomAdapter(String[] dataSet) {
-        this.mDataset = dataSet;
+        this.data = dataSet;
     }
 
     @NonNull
@@ -60,12 +60,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
-        String data = mDataset[position];
+        String data = this.data[position];
         holder.initWithData(data);
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return this.data.length;
     }
 }

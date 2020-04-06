@@ -13,7 +13,7 @@
         android:layout_width="0dp"
         android:layout_height="5dp"
 
-        android:background="@drawable/line_bold_dark"
+        android:background="@drawable/line_bold_purple"
 
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
