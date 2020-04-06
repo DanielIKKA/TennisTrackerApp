@@ -14,6 +14,10 @@ import com.android.tennistrackerapp.model.database.managers.PlayerManager;
 
 import java.sql.SQLException;
 
+/**
+ * One of sources : https://gist.github.com/adrienfenech/4d8bbcb441b24f994f51
+ * Official library Documentation : https://ormlite.com/javadoc/ormlite-core/doc-files/ormlite.html#Top
+ */
 public class DBManager {
     private static DBManager managerInstance;
     private DBHelper helper;

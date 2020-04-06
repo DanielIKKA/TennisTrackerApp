@@ -17,9 +17,9 @@ import androidx.annotation.Nullable;
 
 
 /**
- * References
- * https://developer.android.com/training/data-storage/room
- **/
+ * One of sources : https://gist.github.com/adrienfenech/4d8bbcb441b24f994f51
+ * Official library Documentation : https://ormlite.com/javadoc/ormlite-core/doc-files/ormlite.html#Top
+ */
 public class DBHelper extends OrmLiteSqliteOpenHelper {
 
     private static final String DB_NAME = "data.db";
