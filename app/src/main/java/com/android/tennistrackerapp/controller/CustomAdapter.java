@@ -46,15 +46,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         }
 
         void initWithData(Match data) {
-            Player player1 = new Player("Daniel", 42, 21, "");
-            Player player2 = new Player("Victor", 2, 22, "");
+            Player winner = data.getWinner();
+            Player looser = data.getLooser();
 
-            String winner = player1.getName();
-            String looser = player2.getName();
             Date dateToStr = data.getDate();
             String location = data.getLocation() == null ? "N/A" : data.getLocation().toString();
 
-            this.title.setText(MessageFormat.format("{0} - {1}\n{2} - {3}", winner, looser, location, dateToStr));
+            this.title.setText(MessageFormat.format("{0} - {1}\n{2} - {3}", winner.getName(), looser.getName(), location, dateToStr));
         }
     }
 

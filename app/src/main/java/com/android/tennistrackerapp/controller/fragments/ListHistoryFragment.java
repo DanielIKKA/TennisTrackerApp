@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import com.android.tennistrackerapp.R;
 import com.android.tennistrackerapp.controller.CustomAdapter;
+import com.android.tennistrackerapp.model.Match;
+import com.android.tennistrackerapp.model.Player;
 import com.android.tennistrackerapp.model.database.DBManager;
 
 import java.util.ArrayList;
@@ -22,7 +24,7 @@ public class ListHistoryFragment extends Fragment {
     private static final String CURRENT_ID = String.valueOf(R.string.comTennisTrackerCURRENT_ID);
 
     private DBManager manager;
-    ArrayList data;
+    ArrayList<Match> data;
 
     // ---------------------
     // CONSTRUCTOR & FACTORY
@@ -43,7 +45,22 @@ public class ListHistoryFragment extends Fragment {
         this.manager = DBManager.getInstance();
 
         if (getArguments() != null) {
-            this.data = (ArrayList) manager.getMatchManager().getAllMatchWith(getArguments().getInt(CURRENT_ID));
+            // 1- find all matches where currentPlayer played
+            this.data = (ArrayList<Match>) manager.getMatchManager().getAllMatchWith(getArguments().getInt(CURRENT_ID));
+
+            // 2- find players because player data is just represent by id
+            int currentId = getArguments().getInt(CURRENT_ID);
+            Player currentPlayer = manager.getPlayerManager().getById(currentId);
+            for (Match match : this.data) {
+                // 3- divided by 2 requests
+                if(match.getWinner().getId().equals(currentId)) {
+                    match.setWinner(currentPlayer);
+                    match.setLooser(manager.getPlayerManager().getById(match.getLooser().getId()));
+                } else {
+                    match.setWinner(manager.getPlayerManager().getById(match.getWinner().getId()));
+                    match.setLooser(currentPlayer);
+                }
+            }
         }
     }
 
