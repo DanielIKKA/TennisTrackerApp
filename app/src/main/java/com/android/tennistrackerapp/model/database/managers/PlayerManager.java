@@ -1,19 +1,19 @@
 package com.android.tennistrackerapp.model.database.managers;
 
 import com.android.tennistrackerapp.model.Player;
-import com.android.tennistrackerapp.model.database.customDAO.PlayerDAO;
+import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerManager {
-    private PlayerDAO dao;
+    private Dao<Player, Integer> dao;
 
     // --------------
     // CONSTRUCTOR
     // --------------
-    public PlayerManager(PlayerDAO dao) {
+    public PlayerManager(Dao<Player, Integer> dao) {
         this.dao = dao;
     }
 

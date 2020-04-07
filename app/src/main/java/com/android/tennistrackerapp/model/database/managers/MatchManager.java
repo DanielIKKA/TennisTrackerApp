@@ -1,19 +1,19 @@
 package com.android.tennistrackerapp.model.database.managers;
 
 import com.android.tennistrackerapp.model.Match;
-import com.android.tennistrackerapp.model.database.customDAO.MatchDAO;
+import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MatchManager {
-    private MatchDAO dao;
+    private Dao<Match, Integer> dao;
 
     // --------------
     // CONSTRUCTOR
     // --------------
-    public MatchManager(MatchDAO dao) {
+    public MatchManager(Dao<Match, Integer> dao) {
         this.dao = dao;
     }
 

@@ -5,7 +5,7 @@ import android.view.MenuItem;
 
 import com.android.tennistrackerapp.R;
 import com.android.tennistrackerapp.controller.fragments.HomeFragment;
-import com.android.tennistrackerapp.model.database.DBHelper;
+import com.android.tennistrackerapp.model.database.DBManager;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // ---------------------
     // ATTRIBUTE
     // ---------------------
-    private DBHelper dbManager;
+    private DBManager dbManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //FragmentManager
         configFrameLayout();
 
+        DBManager.Init(this);
+        this.dbManager = DBManager.getInstance();
     }
 
     @Override

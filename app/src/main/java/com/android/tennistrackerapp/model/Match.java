@@ -10,7 +10,7 @@ import java.util.Date;
 @DatabaseTable(tableName = "matches")
 public class Match {
 
-    @DatabaseField(id = true, generatedId = true, canBeNull = false)
+    @DatabaseField(generatedId = true, canBeNull = false)
     private long id;
     @DatabaseField(foreign = true, canBeNull = false, columnName = "id_winner_player")
     private Player winner;

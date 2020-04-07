@@ -6,20 +6,19 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "statistics")
 public class MatchStat {
 
-    @DatabaseField(id = true, generatedId = true, canBeNull = false)
+    @DatabaseField(generatedId = true, canBeNull = false)
     private int id;
     @DatabaseField(foreign = true, canBeNull = false, columnName = "id_match", uniqueCombo = true)
     private Match match;
     @DatabaseField(foreign = true, canBeNull = false, columnName = "id_player", uniqueCombo = true)
     private Player player;
-
-    private int nbDoubleFault;
-    private float percentFirstService;
-    private float percentSecondService;
-    private int nbBreakBalls;
-    private int nbWinPoint;
-    private int nbWinGame;
-    private int maxGameSeries;
+    @DatabaseField private int nbDoubleFault;
+    @DatabaseField private float percentFirstService;
+    @DatabaseField private float percentSecondService;
+    @DatabaseField private int nbBreakBalls;
+    @DatabaseField private int nbWinPoint;
+    @DatabaseField private int nbWinGame;
+    @DatabaseField private int maxGameSeries;
 
     // ----------------
     // CONSTRUCTOR

@@ -2,8 +2,13 @@ package com.android.tennistrackerapp.model.database.customDAO;
 
 
 import com.android.tennistrackerapp.model.Match;
-import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.BaseDaoImpl;
 
-public interface MatchDAO extends Dao<Match, Integer> {
+import java.sql.SQLException;
+
+public class MatchDAO extends BaseDaoImpl<Match, Integer> {
+    protected MatchDAO(Class<Match> dataClass) throws SQLException {
+        super(dataClass);
+    }
 }
 
