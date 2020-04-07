@@ -11,7 +11,7 @@ import java.util.Date;
 public class Match {
 
     @DatabaseField(generatedId = true, canBeNull = false)
-    private long id;
+    private int id;
     @DatabaseField(foreign = true, canBeNull = false, columnName = "id_winner_player")
     private Player winner;
     @DatabaseField(foreign = true, canBeNull = false, columnName = "id_looser_player")
@@ -77,7 +77,7 @@ public class Match {
     // ----------------
     // GETTERS
     // ----------------
-    public long getId() { return id; }
+    public int getId() { return id; }
     public Player getWinner() { return winner; }
     public Player getLooser() { return looser; }
     public Date getDate() { return date; }
@@ -87,7 +87,7 @@ public class Match {
     // ----------------
     // SETTERS
     // ----------------
-    public void setId(long id) { this.id = id; }
+    public void setId(int id) { this.id = id; }
     public void setWinner(Player winner) { this.winner = winner; }
     public void setLooser(Player looser) { this.looser = looser; }
     public void setDate(Date date) { this.date = date; }

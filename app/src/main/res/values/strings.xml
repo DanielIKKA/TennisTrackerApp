@@ -1,16 +1,20 @@
 <resources>
     <string name="app_name">TennisTrackerApp</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="default_header_rank">rank : 2</string>
-    <string name="default_header_age">21 ans</string>
-    <string name="default_header_name">player\'s name sdfq</string>
+    <!-- Profile Card Strings -->
+    <string name="profile_card_default_rank">rank : 2</string>
+    <string name="profile_card_default_age">21 ans</string>
+    <string name="profile_card_default_name">player\'s name</string>
+
+    <string name="profile_card_rank">rank:</string>
+    <string name="profile_card_age">years</string>
+
+    <!-- List Fragment Strings -->
     <string name="history_list_title">Last Matches</string>
     <string name="default_cell_title">adversaire\nLieu - 07/07/2019</string>
+
+    <!-- MenuDrawer Strings -->
     <string name="menu">MENU</string>
 
-    <!-- Used in NavigationDrawer -->
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+
 </resources>

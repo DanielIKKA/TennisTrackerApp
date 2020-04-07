@@ -61,10 +61,10 @@ public class DBManager {
         ArrayList<Player> players = (ArrayList<Player>) playerManager.getAll();
 
         if (players.isEmpty()) {
-            Player player1 = new Player("Daniel", 1, "");
-            Player player2 = new Player("Victor", 2, "");
-            this.playerManager.createOne(new Player("Daniel", 1, ""));
-            this.playerManager.createOne(new Player("Victor", 2, ""));
+            Player player1 = new Player("Daniel", 1, 21, "");
+            Player player2 = new Player("Victor", 2, 22, "");
+            this.playerManager.createOne(player1);
+            this.playerManager.createOne(player2);
 
             this.matchManager.createOne(new Match(player1, player2, new Date(), null));
 
@@ -72,4 +72,10 @@ public class DBManager {
         }
     }
 
+    // ---------------
+    // GETTERS
+    // ---------------
+    public PlayerManager getPlayerManager() { return playerManager; }
+    public MatchManager getMatchManager() { return matchManager; }
+    public MatchStatManager getMatchStatManager() { return matchStatManager; }
 }

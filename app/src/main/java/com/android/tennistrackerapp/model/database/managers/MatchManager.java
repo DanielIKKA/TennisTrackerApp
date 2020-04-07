@@ -20,7 +20,7 @@ public class MatchManager {
     // --------------
     // QUERIES
     // --------------
-    public List<Match> getAllMatch() {
+    public List<Match> getAll() {
         try {
             return this.dao.queryForAll();
         } catch (SQLException e) {

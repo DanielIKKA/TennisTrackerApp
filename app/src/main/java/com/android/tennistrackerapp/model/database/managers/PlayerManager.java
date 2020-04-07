@@ -29,6 +29,15 @@ public class PlayerManager {
         }
     }
 
+    public Player getById(int id) {
+        try {
+            return dao.queryForId(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public long createOne(Player newPlayer) {
         try {
             this.dao.create(newPlayer);

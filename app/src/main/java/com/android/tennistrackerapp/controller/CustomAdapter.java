@@ -46,8 +46,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         }
 
         void initWithData(Match data) {
-            Player player1 = new Player("Daniel", 42, "");
-            Player player2 = new Player("Victor", 2, "");
+            Player player1 = new Player("Daniel", 42, 21, "");
+            Player player2 = new Player("Victor", 2, 22, "");
 
             String winner = player1.getName();
             String looser = player2.getName();

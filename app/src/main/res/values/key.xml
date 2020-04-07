@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Shared Preference id -->
+    <string name="comTennisTrackerPREF_MANAGER">com.tennisTracker.PREF_MANAGER</string>
+    <string name="comTennisTrackerCURRENT_ID">comTennisTrackerCURRENT_ID</string>
+    <string name="menu_title_item_home">Home</string>
+    <string name="menu_title_item_new_player">New player</string>
+    <string name="menu_title_item_settings">Settings</string>
+
+    <!-- Used in NavigationDrawer -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+</resources>

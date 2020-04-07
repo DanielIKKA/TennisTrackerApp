@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import com.android.tennistrackerapp.R;
 import com.android.tennistrackerapp.controller.CustomAdapter;
-import com.android.tennistrackerapp.model.Match;
+import com.android.tennistrackerapp.model.database.DBManager;
 
 import java.util.ArrayList;
 
@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ListHistoryFragment extends Fragment {
 
+    private DBManager manager;
+
     /**
      * It's require to have a public empty constructor
      */
@@ -27,6 +29,7 @@ public class ListHistoryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.manager = DBManager.getInstance();
     }
 
     @Nullable
@@ -41,10 +44,7 @@ public class ListHistoryFragment extends Fragment {
        rv.setLayoutManager(new LinearLayoutManager(v.getContext(), RecyclerView.VERTICAL, false));
 
        //2- The Adapter will manage content on each cell, it is a custom Class which extends of Adapter
-        ArrayList data = new ArrayList<Match>();
-        data.add(new Match());
-        data.add(new Match());
-        data.add(new Match());
+        ArrayList data = (ArrayList) manager.getMatchManager().getAll();
         rv.setAdapter(new CustomAdapter(data));
 
         return v;
