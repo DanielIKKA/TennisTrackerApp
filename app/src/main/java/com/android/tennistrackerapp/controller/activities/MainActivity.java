@@ -8,7 +8,7 @@ import android.view.MenuItem;
 
 import com.android.tennistrackerapp.R;
 import com.android.tennistrackerapp.controller.fragments.HomeFragment;
-import com.android.tennistrackerapp.controller.fragments.StatisticsFragment;
+import com.android.tennistrackerapp.controller.fragments.NewProfileFragment;
 import com.android.tennistrackerapp.model.database.DBManager;
 import com.google.android.material.navigation.NavigationView;
 
@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void showNewProfileFragment(){
-        if (this.fragmentNewProfile == null) this.fragmentNewProfile = StatisticsFragment.newInstance();
+        if (this.fragmentNewProfile == null) this.fragmentNewProfile = NewProfileFragment.newInstance();
         this.startTransactionFragment(this.fragmentNewProfile);
     }
 

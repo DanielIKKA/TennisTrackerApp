@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:id="@+id/new_profile_scrollview"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".controller.fragments.NewProfileFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/new_profile_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Header -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/new_profile_title_highlight"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintTop_toTopOf="@id/new_profile_title"
+            app:layout_constraintStart_toStartOf="@id/new_profile_title"
+            app:layout_constraintEnd_toEndOf="@id/new_profile_title"
+            android:layout_marginStart="5sp"
+
+            style="@style/TextAppearance.MaterialComponents.Headline3"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textColor="@color/green_tennisTracker"
+            android:text="@string/new_profile_title"
+            />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/new_profile_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginVertical="30dp"
+
+            style="@style/TextAppearance.MaterialComponents.Headline3"
+            android:textAlignment="center"
+            android:textColor="@color/text_dark"
+            android:textStyle="bold"
+            android:text="@string/new_profile_title"
+            />
+        <View
+            android:id="@+id/new_profile_bar_highlight"
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+
+            app:layout_constraintStart_toStartOf="@id/new_profile_bar"
+            app:layout_constraintEnd_toEndOf="@id/new_profile_bar"
+            app:layout_constraintTop_toTopOf="@id/new_profile_bar"
+            android:layout_marginTop="2dp"
+
+            android:background="@drawable/line_bold_highlight"
+            />
+        <View
+            android:id="@+id/new_profile_bar"
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_percent="0.4"
+            app:layout_constraintTop_toBottomOf="@id/new_profile_title"
+            android:layout_marginTop="30dp"
+
+            android:background="@drawable/line_bold_dark"
+            />
+
+        <!-- body -->
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/new_profile_field_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="60dp"
+            android:inputType="textPersonName"
+            android:paddingHorizontal="20dp"
+            android:text="Name"
+
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/new_profile_bar"
+            app:layout_constraintWidth_percent="0.8" />
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/new_profile_field_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintTop_toBottomOf="@id/new_profile_field_name"
+            app:layout_constraintStart_toStartOf="@id/new_profile_field_name"
+
+            app:layout_constraintWidth_percent="0.35"
+            android:layout_marginTop="30dp"
+
+            android:paddingHorizontal="20dp"
+            android:text="player rank"
+            android:inputType="number"
+            />
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/new_profile_field_age"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintTop_toTopOf="@id/new_profile_field_rank"
+
+            app:layout_constraintEnd_toEndOf="@id/new_profile_field_name"
+            app:layout_constraintWidth_percent="0.35"
+
+            android:paddingHorizontal="20dp"
+            android:text="age"
+            android:inputType="number"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/new_profile_btn"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Menu"
+            android:layout_width="0dp"
+
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:backgroundTint="@color/design_default_color_primary"
+            android:text="CREATE"
+            android:textColor="@color/colorPrimary"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/new_profile_field_age"
+            app:layout_constraintWidth_percent="0.5" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
