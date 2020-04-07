@@ -2,6 +2,8 @@ package com.android.tennistrackerapp.model.database.managers;
 
 import com.android.tennistrackerapp.model.Match;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -46,6 +48,19 @@ public class MatchManager {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public List<Match> getAllMatchWith(int id) {
+
+        QueryBuilder<Match, Integer> builder = dao.queryBuilder();
+        PreparedQuery<Match> preparedQuery;
+        try {
+            preparedQuery = builder.where().eq(Match.WINNER_FIELD_NAME, id).or().eq(Match.LOOSER_FIELD_NAME, id).prepare();
+            return dao.query(preparedQuery);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
         }
     }
 }

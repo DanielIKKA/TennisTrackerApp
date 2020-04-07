@@ -10,11 +10,14 @@ import java.util.Date;
 @DatabaseTable(tableName = "matches")
 public class Match {
 
+    public static final String WINNER_FIELD_NAME = "id_winner_player";
+    public static final String LOOSER_FIELD_NAME = "id_looser_player";
+
     @DatabaseField(generatedId = true, canBeNull = false)
     private int id;
-    @DatabaseField(foreign = true, canBeNull = false, columnName = "id_winner_player")
+    @DatabaseField(foreign = true, canBeNull = false, columnName = WINNER_FIELD_NAME)
     private Player winner;
-    @DatabaseField(foreign = true, canBeNull = false, columnName = "id_looser_player")
+    @DatabaseField(foreign = true, canBeNull = false, columnName = LOOSER_FIELD_NAME)
     private Player looser;
     @DatabaseField
     private Date date;

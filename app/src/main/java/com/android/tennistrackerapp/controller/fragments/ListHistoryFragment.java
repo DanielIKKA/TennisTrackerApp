@@ -19,17 +19,32 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ListHistoryFragment extends Fragment {
 
-    private DBManager manager;
+    private static final String CURRENT_ID = String.valueOf(R.string.comTennisTrackerCURRENT_ID);
 
-    /**
-     * It's require to have a public empty constructor
-     */
+    private DBManager manager;
+    ArrayList data;
+
+    // ---------------------
+    // CONSTRUCTOR & FACTORY
+    // ---------------------
+    public static ListHistoryFragment newInstance(int currentPlayerId) {
+        ListHistoryFragment fragment = new ListHistoryFragment();
+        Bundle args = new Bundle();
+        args.putInt(CURRENT_ID, currentPlayerId);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     public ListHistoryFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.manager = DBManager.getInstance();
+
+        if (getArguments() != null) {
+            this.data = (ArrayList) manager.getMatchManager().getAllMatchWith(getArguments().getInt(CURRENT_ID));
+        }
     }
 
     @Nullable
@@ -44,7 +59,6 @@ public class ListHistoryFragment extends Fragment {
        rv.setLayoutManager(new LinearLayoutManager(v.getContext(), RecyclerView.VERTICAL, false));
 
        //2- The Adapter will manage content on each cell, it is a custom Class which extends of Adapter
-        ArrayList data = (ArrayList) manager.getMatchManager().getAll();
         rv.setAdapter(new CustomAdapter(data));
 
         return v;

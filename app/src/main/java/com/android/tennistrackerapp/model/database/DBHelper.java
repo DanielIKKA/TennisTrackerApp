@@ -47,7 +47,16 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource, int i, int i1) {
+        try {
+            TableUtils.dropTable(connectionSource, Player.class, true);
+            TableUtils.dropTable(connectionSource, Match.class, true);
+            TableUtils.dropTable(connectionSource, MatchStat.class, true);
 
+            onCreate(sqLiteDatabase, connectionSource);
+            Log.d("DATABASE", "on upgrade database");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 

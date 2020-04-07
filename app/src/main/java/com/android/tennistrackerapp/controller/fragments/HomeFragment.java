@@ -100,7 +100,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         if(listFragment == null) {
             // A. instantiate it
-            listFragment = new ListHistoryFragment();
+            listFragment = ListHistoryFragment.newInstance(this.currentPlayerId);
             // B. add it to the FragmentManager
             getChildFragmentManager().beginTransaction()
                     .add(R.id.frame_list, listFragment)
