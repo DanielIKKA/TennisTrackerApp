@@ -27,7 +27,9 @@
         android:layout_height="wrap_content"
 
         android:text="@string/history_list_title"
-       style="@style/TextAppearance.AppCompat.Headline"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold"
+        android:textColor="@color/text_dark"
         android:gravity="center_horizontal"
 
         app:layout_constraintTop_toBottomOf="@+id/recycle_line"

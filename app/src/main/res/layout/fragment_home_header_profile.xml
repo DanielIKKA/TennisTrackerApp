@@ -3,8 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/fragment_profile_height"
-    android:background="@android:color/transparent">
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:layout_marginVertical="20dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
@@ -18,7 +19,7 @@
         app:layout_constraintDimensionRatio="1:1"
 
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintWidth_percent="0.5" />
+        app:layout_constraintWidth_percent="0.40" />
 
     <View
         android:id="@+id/circle_dashed"
@@ -54,32 +55,32 @@
             android:layout_height="wrap_content"
 
             android:layout_marginBottom="25dp"
-            android:maxLines="2"
-            android:text="@string/default_header_name"
+            android:maxLines="1"
+            android:text="@string/profile_card_default_name"
             style="@style/TextAppearance.MaterialComponents.Headline5"
             android:textStyle="bold"/>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/_header_rank"
+            android:id="@+id/header_rank"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
             android:layout_marginVertical="5dp"
             android:layout_marginStart="20dp"
-            android:text="@string/default_header_rank"
+            android:text="@string/profile_card_default_rank"
 
             android:textColor="@color/text_dark"
             style="@style/TextAppearance.AppCompat.Medium" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/_header_age"
+            android:id="@+id/header_age"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
             android:layout_marginVertical="5dp"
             android:layout_marginStart="20dp"
 
-            android:text="@string/default_header_age"
+            android:text="@string/profile_card_default_age"
             android:textColor="@color/text_dark"
             style="@style/TextAppearance.AppCompat.Medium" />
     </LinearLayout>

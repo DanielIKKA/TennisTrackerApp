@@ -7,40 +7,29 @@ import android.view.ViewGroup;
 
 import com.android.tennistrackerapp.R;
 import com.android.tennistrackerapp.controller.CustomAdapter;
+import com.android.tennistrackerapp.model.database.DBManager;
+
+import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ListHistoryFragment extends Fragment {
 
-    private AppCompatButton mBtnMore;
+    private DBManager manager;
 
     /**
      * It's require to have a public empty constructor
      */
     public ListHistoryFragment() {}
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment HeaderProfilFragment.
-     */
-    public static ListHistoryFragment newInstance() {
-        ListHistoryFragment fragment = new ListHistoryFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {}
+        this.manager = DBManager.getInstance();
     }
 
     @Nullable
@@ -53,17 +42,11 @@ public class ListHistoryFragment extends Fragment {
         //RecycleView
         //1- Layout Manager will manage displaying on screen, there it will be a vertical list
        rv.setLayoutManager(new LinearLayoutManager(v.getContext(), RecyclerView.VERTICAL, false));
-        //2- The Adapter will manage content on each cell, it is a custom Class which extends of Adapter
-        rv.setAdapter(new CustomAdapter(new String[]{
-                "Roger\nLieu - 07/07/2019",
-                "Nadal\nLieu - 07/07/2019",
-                "Roger\nLieu - 07/07/2019",
-                "Nadal\nLieu - 07/07/2019",
-                "Roger\nLieu - 07/07/2019",
-                "Nadal\nLieu - 07/07/2019"}));
+
+       //2- The Adapter will manage content on each cell, it is a custom Class which extends of Adapter
+        ArrayList data = (ArrayList) manager.getMatchManager().getAll();
+        rv.setAdapter(new CustomAdapter(data));
 
         return v;
     }
-
-    public AppCompatButton getBtnMore() { return mBtnMore; }
 }

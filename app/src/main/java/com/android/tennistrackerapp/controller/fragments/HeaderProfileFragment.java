@@ -1,14 +1,19 @@
 package com.android.tennistrackerapp.controller.fragments;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.android.tennistrackerapp.R;
+import com.android.tennistrackerapp.model.Player;
+import com.android.tennistrackerapp.model.database.DBManager;
+
+import java.util.Objects;
+
+import androidx.fragment.app.Fragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,34 +21,24 @@ import com.android.tennistrackerapp.R;
  * create an instance of this fragment.
  */
 public class HeaderProfileFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private static final String CURRENT_ID = String.valueOf(R.string.comTennisTrackerCURRENT_ID);
 
-    /**
-     * It's require to have a public empty constructor
-     */
-    public HeaderProfileFragment() {}
+    // ---------------------
+    // DESIGN ELEMENTS
+    // ---------------------
+    private View mainView;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HeaderProfilFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HeaderProfileFragment newInstance(String param1, String param2) {
+    private Player currentPlayer = new Player();
+    private DBManager manager;
+
+    // ---------------------
+    // CONSTRUCTOR & FACTORY
+    // ---------------------
+    public static HeaderProfileFragment newInstance(int currentPlayerId) {
         HeaderProfileFragment fragment = new HeaderProfileFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putInt(CURRENT_ID, currentPlayerId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,16 +46,43 @@ public class HeaderProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        this.manager = DBManager.getInstance();
+
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            this.currentPlayer.setId(getArguments().getInt(CURRENT_ID));
+            this.currentPlayer = manager.getPlayerManager().getById(currentPlayer.getId());
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home_header_profile, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        this.mainView =  inflater.inflate(R.layout.fragment_home_header_profile, container, false);
+        updateUI();
+        Log.d("PROFILE_CARD_OnCreateView", String.valueOf(currentPlayer.getId()));
+        return mainView;
+    }
+
+    // ---------------------
+    // SETUP FUNCTIONS
+    // ---------------------
+    private void updateUI() {
+        TextView name = this.mainView.findViewById(R.id.header_name_player);
+        TextView rank = this.mainView.findViewById(R.id.header_rank);
+        TextView age = this.mainView.findViewById(R.id.header_age);
+
+        String rankStr = new StringBuilder()
+                .append(Objects.requireNonNull(getActivity()).getResources().getString(R.string.profile_card_rank)).append(" ")
+                .append(this.currentPlayer.getRank())
+                .toString();
+
+        String ageStr = new StringBuilder()
+                .append(this.currentPlayer.getAge()).append(" ")
+                .append(Objects.requireNonNull(getActivity()).getResources().getString(R.string.profile_card_age))
+                .toString();
+
+        name.setText(this.currentPlayer.getName());
+        rank.setText(rankStr);
+        age.setText(ageStr);
     }
 }

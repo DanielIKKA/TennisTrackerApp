@@ -1,5 +1,7 @@
 package com.android.tennistrackerapp.controller.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.transition.TransitionManager;
 import android.view.LayoutInflater;
@@ -8,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.android.tennistrackerapp.R;
+import com.android.tennistrackerapp.model.database.DBManager;
+
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +22,8 @@ import androidx.fragment.app.Fragment;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
+    private static final String CURRENT_ID = String.valueOf(R.string.comTennisTrackerCURRENT_ID);
+    private static final String PREFERENCE_MANAGER = String.valueOf(R.string.comTennisTrackerPREF_MANAGER);
     // ------------------------------
     // COMPONENTS FOR DESIGN
     // ------------------------------
@@ -24,8 +31,31 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private boolean mIsListExpanded = false;
     private ConstraintSet originalConstrainSet;
 
+    // ------------------------------
+    // ATTRIBUTES
+    // ------------------------------
+    private DBManager manager;
+    private int currentPlayerId;
+
+    // ------------------------------
+    // CONSTRUCTOR AND OVERRIDES
+    // ------------------------------
     public static HomeFragment newInstance() {
         return new HomeFragment();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        manager = DBManager.getInstance();
+        getSharedPref();
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        getSharedPref();
+
     }
 
     @Nullable
@@ -61,7 +91,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         // 2- manage and do something if it's not the case
         if(profileFragment == null) {
             // A. instantiate it
-            profileFragment = new HeaderProfileFragment();
+            profileFragment = HeaderProfileFragment.newInstance(this.currentPlayerId);
             // B. add it to the FragmentManager
             getChildFragmentManager().beginTransaction()
                     .add(R.id.frame_layout_header_profile, profileFragment)
@@ -82,6 +112,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         // Configuration for layout animation
         this.originalConstrainSet = new ConstraintSet();
         this.originalConstrainSet.clone((ConstraintLayout) mainView.findViewById(R.id.fragment_home_wrapper));
+    }
+
+    private void getSharedPref() {
+        SharedPreferences sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences(PREFERENCE_MANAGER, Context.MODE_PRIVATE);
+        this.currentPlayerId = sharedPreferences.getInt(CURRENT_ID, -1);
     }
 
     // ---------------------

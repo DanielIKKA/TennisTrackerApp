@@ -6,23 +6,23 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/activity_main_drawer_news"
+            android:id="@+id/menu_item_home"
             android:icon="@drawable/baseline_home_black_24dp"
-            android:title="Home" />
+            android:title="@string/menu_title_item_home" />
     </group>
 
     <item android:title="Configuration">
         <menu>
             <group android:checkableBehavior="single">
                 <item
-                    android:id="@+id/activity_main_drawer_profile"
+                    android:id="@+id/menu_item_new_player"
                     android:icon="@drawable/baseline_home_black_24dp"
-                    android:title="Profil"
+                    android:title="@string/menu_title_item_new_player"
                     />
                 <item
-                    android:id="@+id/activity_main_drawer_settings"
+                    android:id="@+id/menu_item_settings"
                     android:icon="@drawable/baseline_home_black_24dp"
-                    android:title="Paramètres" />
+                    android:title="@string/menu_title_item_settings" />
             </group>
         </menu>
     </item>

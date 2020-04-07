@@ -7,5 +7,5 @@
     <dimen name="text_level_paragraph">18sp</dimen>
 
     <dimen name="fragment_profile_height">300dp</dimen>
-    <dimen name="margin_top_list">290dp</dimen>
+    <dimen name="fragment_profile_margin_top_list">290dp</dimen>
 </resources>

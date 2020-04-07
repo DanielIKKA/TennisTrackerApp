@@ -7,6 +7,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.tennistrackerapp.R;
+import com.android.tennistrackerapp.model.Match;
+import com.android.tennistrackerapp.model.Player;
+
+import java.text.MessageFormat;
+import java.util.Date;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,7 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomViewHolder> {
 
-    private String[] data;
+    private List<Match> data;
 
     // Provide a reference to the views for each data item (cell)
     // Complex data items may need more than one view per item, and
@@ -29,6 +35,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         private ImageView image;
         private TextView title;
 
+        private Match data;
+
         CustomViewHolder(View cell) {
             super(cell);
 
@@ -37,13 +45,21 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
             this.title = cell.findViewById(R.id.cell_title);
         }
 
-        void initWithData(String data) {
-            this.title.setText(data);
+        void initWithData(Match data) {
+            Player player1 = new Player("Daniel", 42, 21, "");
+            Player player2 = new Player("Victor", 2, 22, "");
+
+            String winner = player1.getName();
+            String looser = player2.getName();
+            Date dateToStr = data.getDate();
+            String location = data.getLocation() == null ? "N/A" : data.getLocation().toString();
+
+            this.title.setText(MessageFormat.format("{0} - {1}\n{2} - {3}", winner, looser, location, dateToStr));
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public CustomAdapter(String[] dataSet) {
+    public CustomAdapter(List<Match> dataSet) {
         this.data = dataSet;
     }
 
@@ -60,12 +76,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
-        String data = this.data[position];
+        Match data = this.data.get(position);
         holder.initWithData(data);
     }
 
     @Override
     public int getItemCount() {
-        return this.data.length;
+        return this.data.size();
     }
 }
