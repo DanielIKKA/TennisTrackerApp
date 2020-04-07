@@ -24,6 +24,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private static final String CURRENT_ID = String.valueOf(R.string.comTennisTrackerCURRENT_ID);
     private static final String PREFERENCE_MANAGER = String.valueOf(R.string.comTennisTrackerPREF_MANAGER);
+
     // ------------------------------
     // COMPONENTS FOR DESIGN
     // ------------------------------

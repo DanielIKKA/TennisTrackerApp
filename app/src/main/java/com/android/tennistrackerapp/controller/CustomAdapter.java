@@ -1,5 +1,7 @@
 package com.android.tennistrackerapp.controller;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,10 +34,14 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     // you provide access to all the views for a data item in a view holder
     static class CustomViewHolder extends RecyclerView.ViewHolder {
 
+        private static final String CURRENT_ID = String.valueOf(R.string.comTennisTrackerCURRENT_ID);
+        private static final String PREFERENCE_MANAGER = String.valueOf(R.string.comTennisTrackerPREF_MANAGER);
+
         private ImageView image;
         private TextView title;
 
         private Match data;
+        private int currentId;
 
         CustomViewHolder(View cell) {
             super(cell);
@@ -43,6 +49,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
             //find cell's view
             this.image = cell.findViewById(R.id.cell_ball_state);
             this.title = cell.findViewById(R.id.cell_title);
+
+            getSharedPref(cell.getContext());
         }
 
         void initWithData(Match data) {
@@ -53,6 +61,16 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
             String location = data.getLocation() == null ? "N/A" : data.getLocation().toString();
 
             this.title.setText(MessageFormat.format("{0} - {1}\n{2} - {3}", winner.getName(), looser.getName(), location, dateToStr));
+            if ((winner.getId() == (this.currentId))) {
+                this.image.setImageResource(R.drawable.ball_win);
+            } else {
+                this.image.setImageResource(R.drawable.ball_lose);
+            }
+        }
+
+        private void getSharedPref(Context context) {
+            SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCE_MANAGER, Context.MODE_PRIVATE);
+            this.currentId = sharedPref.getInt(CURRENT_ID, -1);
         }
     }
 
@@ -65,8 +83,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     @Override
     public CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // create a new generic cell
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_home_cell_history, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_home_cell_history, parent, false);
 
         CustomViewHolder vh = new CustomViewHolder(v);
         return vh;
