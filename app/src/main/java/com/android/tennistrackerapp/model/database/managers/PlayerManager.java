@@ -38,7 +38,7 @@ public class PlayerManager {
         }
     }
 
-    public long createOne(Player newPlayer) {
+    public Integer createOne(Player newPlayer) {
         try {
             this.dao.create(newPlayer);
             return newPlayer.getId();
