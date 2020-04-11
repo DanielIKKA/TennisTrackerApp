@@ -5,8 +5,8 @@
             <stroke
                 android:color="@color/colorAccent_secondary"
                 android:dashGap="5sp"
-                android:dashWidth="10sp"
-                android:width="1.5sp"/>
+                android:dashWidth="7sp"
+                android:width="1sp"/>
         </shape>
     </item>
 </selector>
