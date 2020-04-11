@@ -1,4 +1,4 @@
-package com.android.tennistrackerapp.controller;
+package com.android.tennistrackerapp.controller.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;

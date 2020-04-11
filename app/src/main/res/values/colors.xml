@@ -5,6 +5,9 @@
     <color name="colorAccent_primary">#ECD605</color>
     <color name="colorAccent_secondary">#6A63DD</color>
 
+    <color name="red_salmon">#E67A71</color>
+
+
     <color name="text_dark">#221F1F</color>
     <color name="green_tennisTracker">#B7DB29</color>
 </resources>
