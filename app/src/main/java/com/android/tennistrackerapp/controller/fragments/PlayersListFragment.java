@@ -28,7 +28,7 @@ public class PlayersListFragment extends Fragment {
     // PRIVATE ATTRIBUTE
     // ------------------
     private DBManager manager;
-    private ArrayList<String> itemsList = new ArrayList<>();
+    private ArrayList<String> itemsList;
     private ArrayAdapter<String> adapter;
 
     // ------------------------------
@@ -54,8 +54,9 @@ public class PlayersListFragment extends Fragment {
         //elements design
         lv= mainView.findViewById(R.id.players_list_list_view);
 
-        adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_dropdown_item_1line, itemsList);
-        fillList();
+        this.itemsList = new ArrayList<>();
+        this.adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_list_item_1, itemsList);
+        this.fillList();
 
         this.lv.setAdapter(adapter);
 
