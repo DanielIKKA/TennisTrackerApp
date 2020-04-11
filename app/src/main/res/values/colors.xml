@@ -9,5 +9,6 @@
 
 
     <color name="text_dark">#221F1F</color>
+    <color name="text_dark_alpha50">#80221F1F</color>
     <color name="green_tennisTracker">#B7DB29</color>
 </resources>
