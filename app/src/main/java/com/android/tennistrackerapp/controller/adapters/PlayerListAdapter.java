@@ -3,6 +3,7 @@ package com.android.tennistrackerapp.controller.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.tennistrackerapp.R;
@@ -21,15 +22,21 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.PlayerViewHolder> {
 
+
+    // --------------------
+    // PRIVATE ATTRIBUTES
+    // --------------------
     private List<Player> data;
 
-    // Provide a reference to the views for each data item (cell)
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
+    // --------------------
+    // STATIC VIEW HOLDER
+    // --------------------
     static class PlayerViewHolder extends RecyclerView.ViewHolder {
 
         private TextView rank;
         private TextView title;
+        private TextView ration;
+        private ProgressBar prograss;
 
         private Player data;
 
@@ -39,6 +46,10 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
             //find cell's view
             this.rank = cell.findViewById(R.id.player_list_cell_rank);
             this.title = cell.findViewById(R.id.player_list_cell_name);
+            this.prograss = cell.findViewById(R.id.player_list_cell_progress);
+            this.ration = cell.findViewById(R.id.player_list_cell_match_count);
+
+            // TODO: asynctasck for progress bar
         }
 
         void initWithData(Player data) {
@@ -49,7 +60,9 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
         }
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
+    // --------------------------
+    // CONSTRUCTOR AND OVERRIDES
+    // --------------------------
     public PlayerListAdapter(List<Player> dataSet) {
         this.data = dataSet;
     }
@@ -61,8 +74,7 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_player_list_cell, parent, false);
 
-        PlayerViewHolder vh = new PlayerViewHolder(v);
-        return vh;
+        return new PlayerViewHolder(v);
     }
 
     @Override

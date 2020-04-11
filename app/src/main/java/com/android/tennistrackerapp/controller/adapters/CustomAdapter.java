@@ -68,8 +68,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_home_cell_history, parent, false);
 
-        CustomViewHolder vh = new CustomViewHolder(v);
-        return vh;
+        return new CustomViewHolder(v);
     }
 
     @Override
