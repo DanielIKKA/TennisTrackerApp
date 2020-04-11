@@ -69,14 +69,17 @@
         android:layout_height="wrap_content"
 
         android:layout_marginTop="60dp"
+        android:hint="Name of player"
         android:inputType="textPersonName"
         android:paddingHorizontal="20dp"
-        android:text="@string/new_profiles_placeholder_name"
 
-        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/new_profiles_placeholder_name"
+        android:tag="new_profile_tag_name"
+
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.35"
         app:layout_constraintWidth_percent="0.8" />
 
@@ -90,6 +93,7 @@
 
         android:paddingHorizontal="20dp"
         android:text="@string/new_profile_placeholder_rank"
+        android:tag="new_profile_tag_rank"
 
         app:layout_constraintStart_toStartOf="@id/new_profile_field_name"
         app:layout_constraintTop_toBottomOf="@id/new_profile_field_name"
@@ -104,6 +108,7 @@
 
         android:paddingHorizontal="20dp"
         android:text="@string/new_profile_placeholder_age"
+        android:tag="new_profile_tag_age"
 
         app:layout_constraintEnd_toEndOf="@id/new_profile_field_name"
         app:layout_constraintTop_toTopOf="@id/new_profile_field_rank"
@@ -117,10 +122,12 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="50dp"
         android:layout_marginTop="100dp"
+
         android:backgroundTint="@color/design_default_color_primary"
         android:text="@string/new_profile_btn"
-
         android:textColor="@color/colorPrimary"
+        android:enabled="false"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
