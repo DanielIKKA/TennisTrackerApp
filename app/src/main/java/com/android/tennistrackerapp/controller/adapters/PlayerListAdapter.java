@@ -87,4 +87,6 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
     public int getItemCount() {
         return this.data.size();
     }
+
+    //TODO: AsyncTask for delete player and update db
 }

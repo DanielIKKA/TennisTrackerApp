@@ -31,8 +31,6 @@ public class PlayersListFragment extends Fragment {
     private DBManager manager;
     ArrayList<Player> data;
 
-    private ArrayList<Player> playersDeleted;
-
     // ------------------------------
     // CONSTRUCTOR AND OVERRIDES
     // ------------------------------
