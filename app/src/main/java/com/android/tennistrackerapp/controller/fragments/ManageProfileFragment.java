@@ -3,7 +3,9 @@ package com.android.tennistrackerapp.controller.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 import com.android.tennistrackerapp.R;
 import com.android.tennistrackerapp.controller.activities.MainActivity;
 import com.android.tennistrackerapp.model.Player;
+import com.android.tennistrackerapp.model.StorageUtil;
 import com.android.tennistrackerapp.model.database.DBManager;
 
 import java.util.ArrayList;
@@ -27,6 +30,7 @@ import java.util.Objects;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import static android.app.Activity.RESULT_OK;
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
 /**
@@ -39,6 +43,7 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
     // ---------------------
     private static final String CURRENT_ID = String.valueOf(R.string.comTennisTrackerCURRENT_ID);
     private static final String PREFERENCE_MANAGER = String.valueOf(R.string.comTennisTrackerPREF_MANAGER);
+    private static final int REQUEST_IMAGE_CAPTURE = 1321;
 
     // --------------
     // DESIGN ELEM
@@ -49,6 +54,7 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
     private ImageView image;
     private TextView title;
 
+    private Bitmap profileImage;
     // ---------------------
     // PRIVATES ATTRIBUTES
     // ---------------------
@@ -56,6 +62,9 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
     private ArrayList<EditText> fields = new ArrayList<>();
     private ProfileViewState state;
     private Player player;
+
+    private String imagePath;
+    private StorageUtil storageManager;
 
     private enum BtnState {
         ENABLE, DISABLE
@@ -76,9 +85,21 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
 
         if (state.equals(ProfileViewState.UPDATE_PROFILE)) {
             fragment.player = player;
+            fragment.imagePath = (player.getPicture().equals("")) ? null : player.getPicture();
         }
 
         return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        this.storageManager = new StorageUtil(getContext());
+
+        if(this.imagePath != null) {
+            this.profileImage = storageManager.loadImageFromStorage(imagePath);
+        }
     }
 
     @Override
@@ -101,6 +122,7 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
         //set listeners
         this.btnAction.setOnClickListener(this);
         this.btnDelete.setOnClickListener(this);
+        this.image.setOnClickListener(this);
         this.mainView.findViewById(R.id.manage_profile_layout).setOnClickListener(this);
 
         for (EditText field : fields) {
@@ -113,13 +135,13 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d("MANGAGE FRAGMENT", "on destroy");
+        Log.d("MANAGE FRAGMENT", "on destroy");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.d("MANGAGE FRAGMENT", "on detach");
+        Log.d("MANAGE FRAGMENT", "on detach");
     }
 
     // ------------------
@@ -138,8 +160,12 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
             this.btnAction.setText(context.getResources().getText(R.string.manage_profile_btn_action_update_profile));
             this.btnDelete.setVisibility(View.VISIBLE);
 
+            if(profileImage != null) {
+                this.image.setImageBitmap(profileImage);
+            }
+
             fields.get(0).setText(player.getName());
-                fields.get(1).setText(String.valueOf(player.getRank()));
+            fields.get(1).setText(String.valueOf(player.getRank()));
             fields.get(2).setText(String.valueOf(player.getAge()));
         }
     }
@@ -151,6 +177,9 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
         for (EditText field: fields) {
             field.getText().clear();
         }
+
+        this.image.setImageBitmap(null);
+        this.image.setBackground(Objects.requireNonNull(getContext()).getDrawable(R.drawable.default_profile));
     }
 
     private void hideSoftKeyBoard() {
@@ -187,9 +216,10 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
         String name = fields.get(0).getText().toString();
         int rank = Integer.parseInt(fields.get(1).getText().toString());
         int age = Integer.parseInt(fields.get(2).getText().toString());
+        String path = this.imagePath != null ? imagePath : "";
 
         // 1- Create a player
-        Player newPlayer = new Player(name, rank, age,"");
+        Player newPlayer = new Player(name, rank, age, path);
         // 2- Put it within db
         manager.getPlayerManager().createOne(newPlayer);
 
@@ -201,11 +231,13 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
         String name = fields.get(0).getText().toString();
         int rank = Integer.parseInt(fields.get(1).getText().toString());
         int age = Integer.parseInt(fields.get(2).getText().toString());
+        String path = this.imagePath != null ? imagePath : "";
 
         // 1- Create a player
         player.setAge(age);
         player.setName(name);
         player.setRank(rank);
+        player.setPicture(path);
         // 2- Put it within db
         manager.getPlayerManager().update(player);
 
@@ -251,6 +283,8 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
                 delete();
             } else if(v.equals(mainView.findViewById(R.id.manage_profile_layout))) {
                 hideSoftKeyBoard();
+            } else if(v.equals(this.image)) {
+                dispatchTakePictureIntent();
             }
     }
 
@@ -266,6 +300,28 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
             setBtnState(BtnState.ENABLE);
         } else {
             setBtnState(BtnState.DISABLE);
+        }
+    }
+
+    // ----------
+    // PHOTO
+    // ----------
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(Objects.requireNonNull(getContext()).getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+
+            //TODO: check with dialog if we keep it or not
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            this.imagePath = storageManager.saveToInternalStorage(imageBitmap, String.valueOf(System.currentTimeMillis()));
+            this.image.setImageBitmap(imageBitmap);
         }
     }
 }
