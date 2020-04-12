@@ -9,8 +9,12 @@ import android.view.MenuItem;
 import com.android.tennistrackerapp.R;
 import com.android.tennistrackerapp.controller.fragments.HomeFragment;
 import com.android.tennistrackerapp.controller.fragments.ManageProfileFragment;
+import com.android.tennistrackerapp.controller.fragments.PlayersListFragment;
+import com.android.tennistrackerapp.model.Player;
 import com.android.tennistrackerapp.model.database.DBManager;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -45,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // 1 - Declare fragment handled by Navigation Drawer
     private Fragment fragmentHome;
     private Fragment fragmentManageProfile;
+    private Fragment fragmentPlayersList;
     private Fragment fragmentSettings;
 
     //FOR DATAS
@@ -52,15 +57,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final int FRAGMENT_HOME = 0;
     private static final int FRAGMENT_MANAGE_PROFILE = 1;
     private static final int FRAGMENT_SETTINGS = 2;
+    private static final int FRAGMENT_PLAYERS_LIST = 4;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-
-        DBManager.Init(this);
-        this.dbManager = DBManager.getInstance();
 
         checkSavedState(savedInstanceState);
 
@@ -100,15 +103,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // ---------------------
     // CONFIGURATION
     // ---------------------
-
     //Bundle InstanceState Configuration
     private void checkSavedState(Bundle bundle) {
+        DBManager.Init(this);
+        this.dbManager = DBManager.getInstance();
         // Check whether we're recreating a previously destroyed instance
         if (bundle != null) {
             this.currentPlayerId = bundle.getInt(CURRENT_ID);
         } else {
             //We have to find one (first of the list)
-            this.currentPlayerId = this.dbManager.getPlayerManager().getAll().get(0).getId();
+            List<Player> list = this.dbManager.getPlayerManager().getAll();
+            this.currentPlayerId = list.get(0).getId();
         }
 
         saveSharedPref();
@@ -132,7 +137,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-
     // Toolbar setup
     private void configureToolBar(){
         this.toolbar = findViewById(R.id.tool_bar);
@@ -155,10 +159,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    // ---------------------
+    // -------------------------------------
     // Navigation Listener Implementation
-    // ---------------------
-
+    // -------------------------------------
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int id = menuItem.getItemId();
@@ -172,6 +175,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.menu_item_settings:
                 showFragment(FRAGMENT_SETTINGS);
+                break;
+            case R.id.menu_item_player_list:
+                showFragment(FRAGMENT_PLAYERS_LIST);
                 break;
             default:
                 break;
@@ -193,9 +199,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case FRAGMENT_SETTINGS:
                 this.showSettingsFragment();
                 break;
+            case FRAGMENT_PLAYERS_LIST:
+                this.showPayersListFragment();
+                break;
             default:
                 break;
         }
+    }
+
+    private void showPayersListFragment() {
+        if (this.fragmentPlayersList == null) this.fragmentPlayersList = PlayersListFragment.newInstance();
+        this.startTransactionFragment(this.fragmentPlayersList);
     }
 
     private void showHomeFragment(){

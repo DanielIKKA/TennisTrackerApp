@@ -11,10 +11,14 @@
 
     <!-- List Fragment Strings -->
     <string name="history_list_title">Last Matches</string>
-    <string name="default_cell_title">adversaire\nLieu - 07/07/2019</string>
+    <string name="default_cell_title">adversary\nLieu - 07/07/2019</string>
 
     <!-- MenuDrawer Strings -->
     <string name="menu">MENU</string>
+    <string name="menu_title_item_player_list">Manage Players</string>
+    <string name="menu_title_item_home">Home</string>
+    <string name="menu_title_item_new_player">New player</string>
+    <string name="menu_title_item_settings">Settings</string>
 
     <!-- Manage_profile -->
     <string name="manage_profile_title_new">NEW PROFILE</string>
@@ -25,6 +29,9 @@
     <string name="manage_profile_btn_action_new_profile">CREATE</string>
     <string name="manage_profile_btn_action_update_profile">UPDATE</string>
     <string name="manage_profile_title_update">EDIT PROFILE</string>
+
+    <!-- List Players fragment -->
+    <string name="player_list_title">"ALL PLAYERS "</string>
 
 
 </resources>

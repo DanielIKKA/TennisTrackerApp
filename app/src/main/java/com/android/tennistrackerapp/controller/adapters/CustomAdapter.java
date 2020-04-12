@@ -1,4 +1,4 @@
-package com.android.tennistrackerapp.controller;
+package com.android.tennistrackerapp.controller.adapters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -85,8 +85,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         // create a new generic cell
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_home_cell_history, parent, false);
 
-        CustomViewHolder vh = new CustomViewHolder(v);
-        return vh;
+        return new CustomViewHolder(v);
     }
 
     @Override

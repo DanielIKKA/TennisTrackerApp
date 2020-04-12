@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.tennistrackerapp.R;
-import com.android.tennistrackerapp.controller.CustomAdapter;
+import com.android.tennistrackerapp.controller.adapters.CustomAdapter;
 import com.android.tennistrackerapp.model.Match;
 import com.android.tennistrackerapp.model.Player;
 import com.android.tennistrackerapp.model.database.DBManager;
