@@ -16,13 +16,15 @@
     <!-- MenuDrawer Strings -->
     <string name="menu">MENU</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="new_profile_title">NEW PROFILE</string>
-    <string name="new_profile_btn">CREATE</string>
-    <string name="new_profile_placeholder_age">age</string>
-    <string name="new_profile_placeholder_rank">player rank</string>
-    <string name="new_profiles_placeholder_name">Name</string>
+    <!-- Manage_profile -->
+    <string name="manage_profile_title_new">NEW PROFILE</string>
+    <string name="manage_profile_placeholder_age">Age :</string>
+    <string name="manage_profile_placeholder_rank">Rank :</string>
+    <string name="manage_profile_placeholder_name">Name :</string>
+    <string name="manage_profile_btn_delete">Delete</string>
+    <string name="manage_profile_btn_action_new_profile">CREATE</string>
+    <string name="manage_profile_btn_action_update_profile">UPDATE</string>
+    <string name="manage_profile_title_update">EDIT PROFILE</string>
 
 
 </resources>

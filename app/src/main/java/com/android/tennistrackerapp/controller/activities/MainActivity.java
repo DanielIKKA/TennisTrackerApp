@@ -8,7 +8,7 @@ import android.view.MenuItem;
 
 import com.android.tennistrackerapp.R;
 import com.android.tennistrackerapp.controller.fragments.HomeFragment;
-import com.android.tennistrackerapp.controller.fragments.NewProfileFragment;
+import com.android.tennistrackerapp.controller.fragments.ManageProfileFragment;
 import com.android.tennistrackerapp.model.database.DBManager;
 import com.google.android.material.navigation.NavigationView;
 
@@ -44,13 +44,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //FOR FRAGMENTS
     // 1 - Declare fragment handled by Navigation Drawer
     private Fragment fragmentHome;
-    private Fragment fragmentNewProfile;
+    private Fragment fragmentManageProfile;
     private Fragment fragmentSettings;
 
     //FOR DATAS
     // 2 - Identify each fragment with a number
     private static final int FRAGMENT_HOME = 0;
-    private static final int FRAGMENT_NEW_PROFILE = 1;
+    private static final int FRAGMENT_MANAGE_PROFILE = 1;
     private static final int FRAGMENT_SETTINGS = 2;
 
 
@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 showFragment(FRAGMENT_HOME);
                 break;
             case R.id.menu_item_new_player:
-                showFragment(FRAGMENT_NEW_PROFILE);
+                showFragment(FRAGMENT_MANAGE_PROFILE);
                 break;
             case R.id.menu_item_settings:
                 showFragment(FRAGMENT_SETTINGS);
@@ -187,8 +187,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case FRAGMENT_HOME :
                 this.showHomeFragment();
                 break;
-            case FRAGMENT_NEW_PROFILE:
-                this.showNewProfileFragment();
+            case FRAGMENT_MANAGE_PROFILE:
+                this.showManageProfileFragment();
                 break;
             case FRAGMENT_SETTINGS:
                 this.showSettingsFragment();
@@ -203,9 +203,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.startTransactionFragment(this.fragmentHome);
     }
 
-    private void showNewProfileFragment(){
-        if (this.fragmentNewProfile == null) this.fragmentNewProfile = NewProfileFragment.newInstance();
-        this.startTransactionFragment(this.fragmentNewProfile);
+    private void showManageProfileFragment(){
+        if (this.fragmentManageProfile == null) {
+            this.fragmentManageProfile = ManageProfileFragment
+                    .newInstance(ManageProfileFragment.ProfileViewState.NEW_PROFILE);
+        }
+        this.startTransactionFragment(this.fragmentManageProfile);
     }
 
     private void showSettingsFragment(){

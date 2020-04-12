@@ -4,7 +4,7 @@
         <shape android:shape="oval">
             <stroke
                 android:color="@color/colorAccent_secondary"
-                android:dashGap="5sp"
+                android:dashGap="6sp"
                 android:dashWidth="7sp"
                 android:width="1sp"/>
         </shape>

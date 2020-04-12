@@ -1,5 +1,6 @@
 package com.android.tennistrackerapp.controller.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -9,6 +10,8 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.tennistrackerapp.R;
 import com.android.tennistrackerapp.model.Player;
@@ -24,47 +27,63 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NewProfileFragment extends Fragment implements View.OnClickListener, TextWatcher {
+public class ManageProfileFragment extends Fragment implements View.OnClickListener, TextWatcher {
 
     // --------------
     // DESIGN ELEM
     // --------------
     private View mainView;
-    private Button btnCreate;
-
-    enum BtnState {
-        ENABLE, DISABLE
-    }
+    private Button btnAction;
+    private Button btnDelete;
+    private ImageView image;
+    private TextView title;
 
     // ---------------------
     // PRIVATES ATTRIBUTES
     // ---------------------
     private DBManager manager = DBManager.getInstance();
     private ArrayList<EditText> fields = new ArrayList<>();
+    private ProfileViewState state;
+
+    private enum BtnState {
+        ENABLE, DISABLE
+    }
+
+    public static enum ProfileViewState {
+        NEW_PROFILE, UPDATE_PROFILE
+    }
 
     // --------------
     // CONSTRUCTOR
     // --------------
-    public NewProfileFragment() {}
+    public ManageProfileFragment() {}
 
-    public static NewProfileFragment newInstance() {
-        return new NewProfileFragment();
+    public static ManageProfileFragment newInstance(ManageProfileFragment.ProfileViewState state) {
+        ManageProfileFragment fragment = new ManageProfileFragment();
+        fragment.state = state;
+        return fragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        this.mainView =  inflater.inflate(R.layout.fragment_new_profile, container, false);
+        this.mainView =  inflater.inflate(R.layout.fragment_manage_profile, container, false);
 
-        //design elements
-        this.btnCreate = mainView.findViewById(R.id.new_profile_btn);
-        fields.add((EditText) mainView.findViewById(R.id.new_profile_field_name));
-        fields.add((EditText) mainView.findViewById(R.id.new_profile_field_rank));
-        fields.add((EditText) mainView.findViewById(R.id.new_profile_field_age));
+        //common design elements
+        this.btnAction = mainView.findViewById(R.id.manage_profile_btn_action);
+        this.btnDelete = mainView.findViewById(R.id.manage_profile_btn_delete);
+        this.image = mainView.findViewById(R.id.manage_profile_image);
+        this.title = mainView.findViewById(R.id.manage_profile_title);
+        fields.add((EditText) mainView.findViewById(R.id.manage_profile_field_name));
+        fields.add((EditText) mainView.findViewById(R.id.manage_profile_field_rank));
+        fields.add((EditText) mainView.findViewById(R.id.manage_profile_field_age));
+
+        //configure depend on state
+        setupUI();
 
         //set listeners
-        this.btnCreate.setOnClickListener(this);
-        this.mainView.findViewById(R.id.new_profile_layout).setOnClickListener(this);
+        this.btnAction.setOnClickListener(this);
+        this.mainView.findViewById(R.id.manage_profile_layout).setOnClickListener(this);
 
         for (EditText field : fields) {
             field.addTextChangedListener(this);
@@ -73,6 +92,22 @@ public class NewProfileFragment extends Fragment implements View.OnClickListener
         return this.mainView;
     }
 
+    // ------------------
+    // CONFIGURE
+    // ------------------
+    private void setupUI() {
+        Context context = Objects.requireNonNull(getContext());
+
+        if(state.equals(ProfileViewState.NEW_PROFILE)) {
+            this.title.setText(context.getResources().getText(R.string.manage_profile_title_new));
+            this.btnAction.setText(context.getResources().getText(R.string.manage_profile_btn_action_new_profile));
+            this.btnDelete.setVisibility(View.INVISIBLE);
+        } else if (state.equals(ProfileViewState.UPDATE_PROFILE)) {
+            this.title.setText(context.getResources().getText(R.string.manage_profile_title_update));
+            this.btnAction.setText(context.getResources().getText(R.string.manage_profile_btn_action_update_profile));
+            this.btnDelete.setVisibility(View.VISIBLE);
+        }
+    }
 
     // ------------------
     // PRIVATE METHODS
@@ -103,10 +138,10 @@ public class NewProfileFragment extends Fragment implements View.OnClickListener
     private void setBtnState(BtnState state) {
         switch (state) {
             case ENABLE:
-                this.btnCreate.setEnabled(true);
+                this.btnAction.setEnabled(true);
                 break;
             case DISABLE:
-                this.btnCreate.setEnabled(false);
+                this.btnAction.setEnabled(false);
                 break;
         }
     }
@@ -116,7 +151,7 @@ public class NewProfileFragment extends Fragment implements View.OnClickListener
     // ----------------------------
     @Override
     public void onClick(View v) {
-        if(v.equals(mainView.findViewById(R.id.new_profile_layout))) {
+        if(v.equals(mainView.findViewById(R.id.manage_profile_layout))) {
             hideSoftKeyBoard();
             return;
         }
