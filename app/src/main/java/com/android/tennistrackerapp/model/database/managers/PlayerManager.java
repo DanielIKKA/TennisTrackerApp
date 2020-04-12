@@ -38,7 +38,7 @@ public class PlayerManager {
         }
     }
 
-    public long createOne(Player newPlayer) {
+    public Integer createOne(Player newPlayer) {
         try {
             this.dao.create(newPlayer);
             return newPlayer.getId();
@@ -55,6 +55,14 @@ public class PlayerManager {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public void update(Player player) {
+        try {
+            this.dao.update(player);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

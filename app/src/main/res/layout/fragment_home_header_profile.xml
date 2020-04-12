@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/transparent"
-    android:layout_marginVertical="20dp">
+    android:layout_marginVertical="@dimen/header_vertical_margin"
+    android:layout_marginHorizontal="10dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"

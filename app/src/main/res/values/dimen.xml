@@ -2,11 +2,12 @@
 <resources>
     <!-- Toolbar dimensions -->
     <dimen name="padding_toolBar">20dp</dimen>
-    <dimen name="height_tool_bar"></dimen>
 
     <!-- profile fragment dimensions -->
     <dimen name="fragment_profile_height">100dp</dimen>
     <dimen name="fragment_profile_margin_top_list">140dp</dimen>
 
     <dimen name="corner_radius_cell">50dp</dimen>
+
+    <dimen name="header_vertical_margin">40dp</dimen>
 </resources>
