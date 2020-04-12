@@ -1,9 +1,12 @@
 package com.android.tennistrackerapp.controller.fragments;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.tennistrackerapp.R;
+import com.android.tennistrackerapp.controller.activities.MainActivity;
 import com.android.tennistrackerapp.model.Player;
 import com.android.tennistrackerapp.model.database.DBManager;
 
@@ -29,6 +33,12 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
  * A simple {@link Fragment} subclass.
  */
 public class ManageProfileFragment extends Fragment implements View.OnClickListener, TextWatcher {
+
+    // ---------------------
+    // CONSTANTS
+    // ---------------------
+    private static final String CURRENT_ID = String.valueOf(R.string.comTennisTrackerCURRENT_ID);
+    private static final String PREFERENCE_MANAGER = String.valueOf(R.string.comTennisTrackerPREF_MANAGER);
 
     // --------------
     // DESIGN ELEM
@@ -100,6 +110,18 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
         return this.mainView;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("MANGAGE FRAGMENT", "on destroy");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.d("MANGAGE FRAGMENT", "on detach");
+    }
+
     // ------------------
     // CONFIGURE
     // ------------------
@@ -117,8 +139,8 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
             this.btnDelete.setVisibility(View.VISIBLE);
 
             fields.get(0).setText(player.getName());
-            fields.get(1).setText(player.getRank());
-            fields.get(2).setText(player.getAge());
+                fields.get(1).setText(String.valueOf(player.getRank()));
+            fields.get(2).setText(String.valueOf(player.getAge()));
         }
     }
 
@@ -181,12 +203,34 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
         int age = Integer.parseInt(fields.get(2).getText().toString());
 
         // 1- Create a player
-        Player newPlayer = new Player(name, rank, age,"");
+        player.setAge(age);
+        player.setName(name);
+        player.setRank(rank);
         // 2- Put it within db
-        manager.getPlayerManager().createOne(newPlayer);
+        manager.getPlayerManager().update(player);
 
-        // 3- Clean all fields
-        cleanFields();
+        //TODO: Toast
+    }
+
+    private void delete() {
+        manager.getPlayerManager().deleteOneById(player.getId());
+
+        //check if's the current players and update sharedPref if need be
+        Context context = Objects.requireNonNull(getContext());
+        SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCE_MANAGER, Context.MODE_PRIVATE);
+        Integer idShared = sharedPref.getInt(CURRENT_ID, -1);
+
+        if(idShared.equals(player.getId())) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt(CURRENT_ID, manager.getPlayerManager().getAll().get(0).getId());
+            editor.apply();
+        }
+
+        //TODO: display Dialog and return to MainActivity
+
+        Intent i = new Intent(this.getContext(), MainActivity.class);
+        i.putExtra(context.getResources().getString(R.string.FROM_DELETE), true);
+        startActivity(i);
     }
 
     // ----------------------------
@@ -203,9 +247,8 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
                 } else {
                     updatePlayer();
                 }
-                //this.state.equals(ProfileViewState.NEW_PROFILE) ?
             } else if(v.equals(this.btnDelete)) {
-
+                delete();
             } else if(v.equals(mainView.findViewById(R.id.manage_profile_layout))) {
                 hideSoftKeyBoard();
             }

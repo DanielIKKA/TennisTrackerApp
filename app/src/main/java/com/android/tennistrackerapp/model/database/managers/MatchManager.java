@@ -51,6 +51,14 @@ public class MatchManager {
         }
     }
 
+    public void delete(ArrayList<Match> matches) {
+        try {
+            dao.delete(matches);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public List<Match> getAllMatchWith(int id) {
 
         QueryBuilder<Match, Integer> builder = dao.queryBuilder();

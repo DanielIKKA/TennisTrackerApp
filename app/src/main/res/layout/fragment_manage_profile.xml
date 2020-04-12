@@ -39,6 +39,8 @@
             android:layout_height="wrap_content"
 
             android:text="@string/manage_profile_btn_delete"
+            android:background="@color/red_salmon"
+            android:textColor="@color/colorPrimary"
 
             app:layout_constraintTop_toTopOf="@id/manage_profile_image"
             app:layout_constraintStart_toEndOf="@id/manage_profile_image"

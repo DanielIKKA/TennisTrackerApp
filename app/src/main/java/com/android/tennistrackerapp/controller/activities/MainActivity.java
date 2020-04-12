@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Fragment fragmentPlayersList;
     private Fragment fragmentSettings;
 
-    //FOR DATAS
+    //FOR DATA
     // 2 - Identify each fragment with a number
     private static final int FRAGMENT_HOME = 0;
     private static final int FRAGMENT_MANAGE_PROFILE = 1;
@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
+        justComingFromDelete();
         checkSavedState(savedInstanceState);
 
         //Configure Drawer setup Views
@@ -110,6 +111,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Check whether we're recreating a previously destroyed instance
         if (bundle != null) {
             this.currentPlayerId = bundle.getInt(CURRENT_ID);
+            if(dbManager.getPlayerManager().getById(currentPlayerId) == null) {
+                getIdWithSharedPref();
+            }
         } else {
             //We have to find one (first of the list)
             List<Player> list = this.dbManager.getPlayerManager().getAll();
@@ -124,6 +128,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt(CURRENT_ID, this.currentPlayerId);
         editor.apply();
+    }
+
+    private void getIdWithSharedPref() {
+        SharedPreferences prefs = getSharedPreferences(PREFERENCE_MANAGER, Context.MODE_PRIVATE);
+        this.currentPlayerId = prefs.getInt(CURRENT_ID, -1);
+    }
+
+    //Coming from a delete player
+    private void justComingFromDelete() {
+        boolean isFromDelete = getIntent().getBooleanExtra(getResources().getString(R.string.FROM_DELETE), false);
+
+        if(isFromDelete && this.fragmentManageProfile != null) {
+            getSupportFragmentManager().beginTransaction().remove(this.fragmentManageProfile).commit();
+        }
     }
 
     // Fragments setup
