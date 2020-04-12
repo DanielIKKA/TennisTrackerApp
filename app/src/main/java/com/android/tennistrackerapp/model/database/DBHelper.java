@@ -23,7 +23,7 @@ import androidx.annotation.Nullable;
 public class DBHelper extends OrmLiteSqliteOpenHelper {
 
     private static final String DB_NAME = "data.db";
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
 
     // -------------
     // CONSTRUCTOR
