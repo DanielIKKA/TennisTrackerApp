@@ -17,25 +17,24 @@
         android:layout_width="match_parent"
         android:background="@color/colorPrimaryDark">
 
+        <!-- FrameLayout for our fragments -->
+        <FrameLayout
+            android:id="@+id/main_frame_manager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            />
+
         <!-- Toolbar -->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/tool_bar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/hamberger"
 
             app:layout_constraintTop_toTopOf="parent"
             android:paddingHorizontal="20dp"
             style="@style/ToolBarStyle"
-            />
-
-        <!-- FrameLayout for our fragments -->
-        <FrameLayout
-            android:id="@+id/main_frame_manager"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-
-            app:layout_constraintTop_toBottomOf="@id/tool_bar"
-            app:layout_constraintBottom_toBottomOf="parent"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

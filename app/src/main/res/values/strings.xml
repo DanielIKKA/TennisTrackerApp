@@ -31,7 +31,7 @@
     <string name="manage_profile_title_update">EDIT PROFILE</string>
 
     <!-- List Players fragment -->
-    <string name="player_list_title">"ALL PLAYERS "</string>
+    <string name="player_list_title">ALL PLAYERS</string>
 
 
 </resources>

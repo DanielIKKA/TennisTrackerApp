@@ -57,4 +57,12 @@ public class PlayerManager {
             return false;
         }
     }
+
+    public void update(Player player) {
+        try {
+            this.dao.update(player);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

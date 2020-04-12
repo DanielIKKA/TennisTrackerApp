@@ -140,8 +140,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // Toolbar setup
     private void configureToolBar(){
         this.toolbar = findViewById(R.id.tool_bar);
-        this.toolbar.setNavigationIcon(R.drawable.hamberger);
-        setSupportActionBar(toolbar);
+        //this.toolbar.setNavigationIcon(R.drawable.hamberger);
+        //setSupportActionBar(toolbar);
 
     }
 
@@ -220,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void showManageProfileFragment(){
         if (this.fragmentManageProfile == null) {
             this.fragmentManageProfile = ManageProfileFragment
-                    .newInstance(ManageProfileFragment.ProfileViewState.NEW_PROFILE);
+                    .newInstance(ManageProfileFragment.ProfileViewState.NEW_PROFILE, null);
         }
         this.startTransactionFragment(this.fragmentManageProfile);
     }

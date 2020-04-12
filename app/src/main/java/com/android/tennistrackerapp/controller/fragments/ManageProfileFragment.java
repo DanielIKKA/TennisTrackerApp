@@ -20,6 +20,7 @@ import com.android.tennistrackerapp.model.database.DBManager;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
@@ -44,6 +45,7 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
     private DBManager manager = DBManager.getInstance();
     private ArrayList<EditText> fields = new ArrayList<>();
     private ProfileViewState state;
+    private Player player;
 
     private enum BtnState {
         ENABLE, DISABLE
@@ -58,9 +60,14 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
     // --------------
     public ManageProfileFragment() {}
 
-    public static ManageProfileFragment newInstance(ManageProfileFragment.ProfileViewState state) {
+    public static ManageProfileFragment newInstance(ManageProfileFragment.ProfileViewState state, @Nullable Player player) {
         ManageProfileFragment fragment = new ManageProfileFragment();
         fragment.state = state;
+
+        if (state.equals(ProfileViewState.UPDATE_PROFILE)) {
+            fragment.player = player;
+        }
+
         return fragment;
     }
 
@@ -83,6 +90,7 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
 
         //set listeners
         this.btnAction.setOnClickListener(this);
+        this.btnDelete.setOnClickListener(this);
         this.mainView.findViewById(R.id.manage_profile_layout).setOnClickListener(this);
 
         for (EditText field : fields) {
@@ -101,11 +109,16 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
         if(state.equals(ProfileViewState.NEW_PROFILE)) {
             this.title.setText(context.getResources().getText(R.string.manage_profile_title_new));
             this.btnAction.setText(context.getResources().getText(R.string.manage_profile_btn_action_new_profile));
+            this.setBtnState(BtnState.DISABLE);
             this.btnDelete.setVisibility(View.INVISIBLE);
         } else if (state.equals(ProfileViewState.UPDATE_PROFILE)) {
             this.title.setText(context.getResources().getText(R.string.manage_profile_title_update));
             this.btnAction.setText(context.getResources().getText(R.string.manage_profile_btn_action_update_profile));
             this.btnDelete.setVisibility(View.VISIBLE);
+
+            fields.get(0).setText(player.getName());
+            fields.get(1).setText(player.getRank());
+            fields.get(2).setText(player.getAge());
         }
     }
 
@@ -138,12 +151,42 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
     private void setBtnState(BtnState state) {
         switch (state) {
             case ENABLE:
+                btnAction.setAlpha(1);
                 this.btnAction.setEnabled(true);
                 break;
             case DISABLE:
+                btnAction.setAlpha((float) 0.5);
                 this.btnAction.setEnabled(false);
                 break;
         }
+    }
+
+    private void newPlayer() {
+        String name = fields.get(0).getText().toString();
+        int rank = Integer.parseInt(fields.get(1).getText().toString());
+        int age = Integer.parseInt(fields.get(2).getText().toString());
+
+        // 1- Create a player
+        Player newPlayer = new Player(name, rank, age,"");
+        // 2- Put it within db
+        manager.getPlayerManager().createOne(newPlayer);
+
+        // 3- Clean all fields
+        cleanFields();
+    }
+
+    private void updatePlayer() {
+        String name = fields.get(0).getText().toString();
+        int rank = Integer.parseInt(fields.get(1).getText().toString());
+        int age = Integer.parseInt(fields.get(2).getText().toString());
+
+        // 1- Create a player
+        Player newPlayer = new Player(name, rank, age,"");
+        // 2- Put it within db
+        manager.getPlayerManager().createOne(newPlayer);
+
+        // 3- Clean all fields
+        cleanFields();
     }
 
     // ----------------------------
@@ -151,25 +194,21 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
     // ----------------------------
     @Override
     public void onClick(View v) {
-        if(v.equals(mainView.findViewById(R.id.manage_profile_layout))) {
-            hideSoftKeyBoard();
-            return;
-        }
+            if(v.equals(this.btnAction)) {
+                // 1- check if field are not empty
+                if (!isCompleteForm()) return;
+                // 2- check state if Update or New
+                if (state.equals(ProfileViewState.NEW_PROFILE)) {
+                    newPlayer();
+                } else {
+                    updatePlayer();
+                }
+                //this.state.equals(ProfileViewState.NEW_PROFILE) ?
+            } else if(v.equals(this.btnDelete)) {
 
-        // 1- check if field are not empty
-        if(!isCompleteForm()) {
-            return;
-        }
-
-        // 2- Create a player
-        Player newPlayer = new Player(fields.get(0).getText().toString(),Integer.parseInt(fields.get(1).getText().toString()),
-                Integer.parseInt(fields.get(2).getText().toString()), "");
-
-        // 3- Put it within db
-        manager.getPlayerManager().createOne(newPlayer);
-
-        // 4- Clean all fields
-        cleanFields();
+            } else if(v.equals(mainView.findViewById(R.id.manage_profile_layout))) {
+                hideSoftKeyBoard();
+            }
     }
 
     @Override
