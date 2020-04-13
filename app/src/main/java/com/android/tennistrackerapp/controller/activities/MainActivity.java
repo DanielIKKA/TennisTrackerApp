@@ -7,10 +7,13 @@ import android.os.PersistableBundle;
 import android.view.MenuItem;
 
 import com.android.tennistrackerapp.R;
+import com.android.tennistrackerapp.controller.adapters.MatchesListAdapter;
 import com.android.tennistrackerapp.controller.adapters.PlayerListAdapter;
 import com.android.tennistrackerapp.controller.fragments.HomeFragment;
 import com.android.tennistrackerapp.controller.fragments.ManageProfileFragment;
 import com.android.tennistrackerapp.controller.fragments.PlayersListFragment;
+import com.android.tennistrackerapp.controller.fragments.StatisticsFragment;
+import com.android.tennistrackerapp.model.Match;
 import com.android.tennistrackerapp.model.Player;
 import com.android.tennistrackerapp.model.ToastAssistant;
 import com.android.tennistrackerapp.model.database.DBManager;
@@ -27,7 +30,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, PlayerListAdapter.OnPlayerClicked {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        PlayerListAdapter.OnPlayerClicked, MatchesListAdapter.OnMatchClickedListener {
 
     // ---------------------
     // CONSTANTS
@@ -54,15 +58,16 @@ public class MainActivity extends AppCompatActivity
     private Fragment fragmentManageNewProfile;
     private Fragment fragmentManageUpdateProfile;
     private Fragment fragmentPlayersList;
+    private Fragment fragmentStatistics;
     private Fragment fragmentSettings;
 
     //FOR DATA
     // 2 - Identify each fragment with a number
     private static final int FRAGMENT_HOME = 0;
     private static final int FRAGMENT_MANAGE_NEW_PROFILE = 1;
-    private static final int FRAGMENT_MANAGE_UPDATE_PROFILE = 11;
     private static final int FRAGMENT_SETTINGS = 2;
     private static final int FRAGMENT_PLAYERS_LIST = 4;
+
 
 
     @Override
@@ -72,7 +77,6 @@ public class MainActivity extends AppCompatActivity
 
         checkSavedState(savedInstanceState);
         ToastAssistant.initToastAssistant(this);
-
 
         //Configure Drawer setup Views
         this.configureToolBar();
@@ -236,7 +240,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void showHomeFragment(){
-        if (this.fragmentHome == null) this.fragmentHome = HomeFragment.newInstance();
+        if (this.fragmentHome == null) this.fragmentHome = HomeFragment.newInstance(this);
         this.startTransactionFragment(this.fragmentHome);
     }
 
@@ -256,6 +260,14 @@ public class MainActivity extends AppCompatActivity
         this.startTransactionFragment(this.fragmentManageUpdateProfile);
     }
 
+    private void showStatisticFragment(Match match) {
+        if (this.fragmentStatistics == null) {
+            this.fragmentStatistics = StatisticsFragment
+                    .newInstance(match);
+        }
+        this.startTransactionFragment(this.fragmentStatistics);
+    }
+
     private void showSettingsFragment(){
 //        if (this.fragmentSettings == null) this.fragmentSettings = SettingFragment.newInstance();
 //        this.startTransactionFragment(this.fragmentSettings);
@@ -269,15 +281,25 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    // -------------------------------------
+    // -----------------------------------------
     // onPlayerSelected Listener Implementation
-    // -------------------------------------
+    // -----------------------------------------
     @Override
     public void onPlayerSelected(int playerId) {
         if(this.fragmentManageUpdateProfile != null) {
-            //this.getSupportFragmentManager().beginTransaction().remove(this.fragmentManageUpdateProfile).commit();
             this.fragmentManageUpdateProfile = null;
         }
         showManageProfileFragmentForUpdate(playerId);
+    }
+
+    // -----------------------------------------
+    // onMatchSelected Listener Implementation
+    // -----------------------------------------
+    @Override
+    public void onMatchSelected(Match match) {
+        if(this.fragmentStatistics != null) {
+            this.fragmentStatistics = null;
+        }
+        showStatisticFragment(match);
     }
 }

@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.tennistrackerapp.R;
-import com.android.tennistrackerapp.controller.adapters.CustomAdapter;
+import com.android.tennistrackerapp.controller.adapters.MatchesListAdapter;
 import com.android.tennistrackerapp.model.Match;
 import com.android.tennistrackerapp.model.Player;
 import com.android.tennistrackerapp.model.database.DBManager;
@@ -25,12 +25,14 @@ public class ListHistoryFragment extends Fragment {
 
     private DBManager manager;
     ArrayList<Match> data;
+    MatchesListAdapter.OnMatchClickedListener listener;
 
     // ---------------------
     // CONSTRUCTOR & FACTORY
     // ---------------------
-    public static ListHistoryFragment newInstance(int currentPlayerId) {
+    public static ListHistoryFragment newInstance(int currentPlayerId, MatchesListAdapter.OnMatchClickedListener callBack) {
         ListHistoryFragment fragment = new ListHistoryFragment();
+        fragment.listener = callBack;
         Bundle args = new Bundle();
         args.putInt(CURRENT_ID, currentPlayerId);
         fragment.setArguments(args);
@@ -76,7 +78,7 @@ public class ListHistoryFragment extends Fragment {
        rv.setLayoutManager(new LinearLayoutManager(v.getContext(), RecyclerView.VERTICAL, false));
 
        //2- The Adapter will manage content on each cell, it is a custom Class which extends of Adapter
-        rv.setAdapter(new CustomAdapter(data));
+        rv.setAdapter(new MatchesListAdapter(data, listener));
 
         return v;
     }
