@@ -149,7 +149,7 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
             this.btnAction.setText(context.getResources().getText(R.string.manage_profile_btn_action_new_profile));
             this.setBtnState(BtnState.DISABLE);
             this.btnDelete.setVisibility(View.INVISIBLE);
-            this.btnDelete.setVisibility(View.INVISIBLE);
+            this.btnCurrent.setVisibility(View.INVISIBLE);
         } else if (state.equals(ProfileViewState.UPDATE_PROFILE)) {
             this.title.setText(context.getResources().getText(R.string.manage_profile_title_update));
             this.btnAction.setText(context.getResources().getText(R.string.manage_profile_btn_action_update_profile));

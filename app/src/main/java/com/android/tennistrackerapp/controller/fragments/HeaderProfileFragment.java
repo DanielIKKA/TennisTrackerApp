@@ -1,13 +1,15 @@
 package com.android.tennistrackerapp.controller.fragments;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.tennistrackerapp.R;
+import com.android.tennistrackerapp.model.BitmapSaver;
 import com.android.tennistrackerapp.model.Player;
 import com.android.tennistrackerapp.model.database.DBManager;
 
@@ -28,9 +30,16 @@ public class HeaderProfileFragment extends Fragment {
     // DESIGN ELEMENTS
     // ---------------------
     private View mainView;
+    TextView name;
+    TextView rank;
+    TextView age;
+    ImageView image;
 
+    // ---------------------
+    // PRIVATE ATTRIBUTES
+    // ---------------------
     private Player currentPlayer = new Player();
-    private DBManager manager;
+    private DBManager manager = DBManager.getInstance();
 
     // ---------------------
     // CONSTRUCTOR & FACTORY
@@ -47,8 +56,6 @@ public class HeaderProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.manager = DBManager.getInstance();
-
         if (getArguments() != null) {
             this.currentPlayer.setId(getArguments().getInt(CURRENT_ID));
             this.currentPlayer = manager.getPlayerManager().getById(currentPlayer.getId());
@@ -58,19 +65,23 @@ public class HeaderProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.mainView =  inflater.inflate(R.layout.fragment_home_header_profile, container, false);
+
+        findViewByIds();
         updateUI();
-        Log.d("PROFILE_CARD_OnCreateView", String.valueOf(currentPlayer.getId()));
+
         return mainView;
     }
 
     // ---------------------
     // SETUP FUNCTIONS
     // ---------------------
+    private void findViewByIds() {
+        this.name = this.mainView.findViewById(R.id.header_name_player);
+        this.rank = this.mainView.findViewById(R.id.header_rank);
+        this.age = this.mainView.findViewById(R.id.header_age);
+        this.image = this.mainView.findViewById(R.id.header_profile_image);
+    }
     private void updateUI() {
-        TextView name = this.mainView.findViewById(R.id.header_name_player);
-        TextView rank = this.mainView.findViewById(R.id.header_rank);
-        TextView age = this.mainView.findViewById(R.id.header_age);
-
         String rankStr = new StringBuilder()
                 .append(Objects.requireNonNull(getActivity()).getResources().getString(R.string.profile_card_rank)).append(" ")
                 .append(this.currentPlayer.getRank())
@@ -81,8 +92,14 @@ public class HeaderProfileFragment extends Fragment {
                 .append(Objects.requireNonNull(getActivity()).getResources().getString(R.string.profile_card_age))
                 .toString();
 
-        name.setText(this.currentPlayer.getName());
-        rank.setText(rankStr);
-        age.setText(ageStr);
+        Bitmap profil = (this.currentPlayer.getPicture().length == 0) ? null : BitmapSaver.byteToBitmap(this.currentPlayer.getPicture());
+
+        if(profil == null) {
+            this.image.setBackground(getContext().getDrawable(R.drawable.default_profile));
+        }
+        this.image.setImageBitmap(profil);
+        this.name.setText(this.currentPlayer.getName());
+        this.rank.setText(rankStr);
+        this.age.setText(ageStr);
     }
 }
