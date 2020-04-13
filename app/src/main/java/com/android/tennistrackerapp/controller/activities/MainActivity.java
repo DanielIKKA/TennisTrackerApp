@@ -165,9 +165,6 @@ public class MainActivity extends AppCompatActivity
     // Toolbar setup
     private void configureToolBar(){
         this.toolbar = findViewById(R.id.tool_bar);
-        //this.toolbar.setNavigationIcon(R.drawable.hamberger);
-        //setSupportActionBar(toolbar);
-
     }
 
     // Drawer Layout setup
@@ -263,8 +260,6 @@ public class MainActivity extends AppCompatActivity
 //        this.startTransactionFragment(this.fragmentSettings);
     }
 
-    // ---
-
     // 3 - Generic method that will replace and show a fragment inside the MainActivity Frame Layout
     private void startTransactionFragment(Fragment fragment){
         if (!fragment.isVisible()){
@@ -273,8 +268,9 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
-
+    // -------------------------------------
+    // onPlayerSelected Listener Implementation
+    // -------------------------------------
     @Override
     public void onPlayerSelected(int playerId) {
         if(this.fragmentManageUpdateProfile != null) {

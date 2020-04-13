@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,7 @@ import android.widget.TextView;
 import com.android.tennistrackerapp.R;
 import com.android.tennistrackerapp.controller.activities.MainActivity;
 import com.android.tennistrackerapp.model.Player;
-import com.android.tennistrackerapp.model.StorageUtil;
+import com.android.tennistrackerapp.model.BitmapSaver;
 import com.android.tennistrackerapp.model.ToastAssistant;
 import com.android.tennistrackerapp.model.database.DBManager;
 
@@ -54,19 +53,15 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
     private Button btnDelete;
     private ImageView image;
     private TextView title;
+    private ArrayList<EditText> fields = new ArrayList<>();
 
     private Bitmap profileImage;
     // ---------------------
     // PRIVATES ATTRIBUTES
     // ---------------------
     private DBManager manager = DBManager.getInstance();
-    private ArrayList<EditText> fields = new ArrayList<>();
     private ProfileViewState state;
     private Player player;
-
-    private String imagePath;
-    private StorageUtil storageManager;
-    private boolean isChangePicture = false;
 
     private enum BtnState {
         ENABLE, DISABLE
@@ -87,7 +82,6 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
 
         if (state.equals(ProfileViewState.UPDATE_PROFILE)) {
             fragment.player = player;
-            fragment.imagePath = (player.getPicture().equals("")) ? null : player.getPicture();
         }
 
         return fragment;
@@ -98,9 +92,7 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
 
         if (state.equals(ProfileViewState.UPDATE_PROFILE)) {
             fragment.player = fragment.manager.getPlayerManager().getById(id);
-            fragment.imagePath = (fragment.player.getPicture().equals("")) ? null : fragment.player.getPicture();
         }
-
         return fragment;
     }
 
@@ -108,10 +100,8 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.storageManager = new StorageUtil(getContext());
-
-        if(this.imagePath != null) {
-            this.profileImage = storageManager.loadImageFromStorage(imagePath);
+        if(this.state == ProfileViewState.UPDATE_PROFILE) {
+            this.profileImage = BitmapSaver.byteToBitmap(player.getPicture());
         }
     }
 
@@ -143,18 +133,6 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
         }
 
         return this.mainView;
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d("MANAGE FRAGMENT", "on destroy");
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        Log.d("MANAGE FRAGMENT", "on detach");
     }
 
     // ------------------
@@ -230,16 +208,14 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
         String name = fields.get(0).getText().toString();
         int rank = Integer.parseInt(fields.get(1).getText().toString());
         int age = Integer.parseInt(fields.get(2).getText().toString());
-        String path = "";
+        byte[] picture = new byte[]{};
 
         if(this.profileImage != null) {
-            path = String.valueOf(System.currentTimeMillis());
-            this.imagePath = storageManager.saveToInternalStorage(this.profileImage, path);
-            path = this.imagePath;
+            picture = BitmapSaver.bitmapToBytes(this.profileImage, 100);
         }
 
         // 1- Create a player
-        Player newPlayer = new Player(name, rank, age, path);
+        Player newPlayer = new Player(name, rank, age, picture);
         // 2- Put it within db
         manager.getPlayerManager().createOne(newPlayer);
 
@@ -252,25 +228,22 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
         String name = fields.get(0).getText().toString();
         int rank = Integer.parseInt(fields.get(1).getText().toString());
         int age = Integer.parseInt(fields.get(2).getText().toString());
-        String path = this.imagePath == null ? "" : this.imagePath;
+        byte[] picture = new byte[]{};
 
-        if(this.isChangePicture) {
-            path = String.valueOf(System.currentTimeMillis());
-            this.imagePath = storageManager.saveToInternalStorage(this.profileImage, path);
-            path = imagePath;
+        if(this.profileImage != null) {
+            picture = BitmapSaver.bitmapToBytes(this.profileImage, 100);
         }
 
         // 1- Create a player
         player.setAge(age);
         player.setName(name);
         player.setRank(rank);
-        player.setPicture(path);
+        player.setPicture(picture);
         // 2- Put it within db
         manager.getPlayerManager().update(player);
 
         //TODO: Toast
         ToastAssistant.generalInstance.displayShortToast("Player Updated");
-
     }
 
     private void delete() {
@@ -347,7 +320,6 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             this.profileImage = (Bitmap) extras.get("data");
-            this.isChangePicture = true;
             this.image.setImageBitmap(this.profileImage);
         }
     }

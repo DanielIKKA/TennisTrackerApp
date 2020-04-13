@@ -12,5 +12,6 @@
     <style name="ToolBarStyle" parent="AppTheme">
         <item name="android:textColorPrimary">@android:color/black</item>
         <item name="colorControlNormal">@android:color/white</item>
+        <item name="navigationIcon">@drawable/hamberger</item>
     </style>
 </resources>
