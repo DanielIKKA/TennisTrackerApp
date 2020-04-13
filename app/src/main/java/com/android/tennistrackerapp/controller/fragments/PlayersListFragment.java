@@ -29,14 +29,20 @@ public class PlayersListFragment extends Fragment {
     // PRIVATE ATTRIBUTE
     // ------------------
     private DBManager manager;
-    ArrayList<Player> data;
+    private ArrayList<Player> data;
+    private PlayerListAdapter.OnPlayerClicked listenerCallBack;
+
 
     // ------------------------------
     // CONSTRUCTOR AND OVERRIDES
     // ------------------------------
     public PlayersListFragment() {}
 
-    public static PlayersListFragment newInstance() { return new PlayersListFragment(); }
+    public static PlayersListFragment newInstance(PlayerListAdapter.OnPlayerClicked listener) {
+        PlayersListFragment fragment = new PlayersListFragment();
+        fragment.listenerCallBack = listener;
+        return fragment;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,8 +64,7 @@ public class PlayersListFragment extends Fragment {
         rv.setLayoutManager(new LinearLayoutManager(v.getContext(), RecyclerView.VERTICAL, false));
 
         //2- The Adapter will manage content on each cell, it is a custom Class which extends of Adapter
-        rv.setAdapter(new PlayerListAdapter(data));
-
+        rv.setAdapter(new PlayerListAdapter(data, listenerCallBack));
         return v;
     }
 }

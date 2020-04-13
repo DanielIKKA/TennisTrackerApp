@@ -7,10 +7,15 @@ import android.os.PersistableBundle;
 import android.view.MenuItem;
 
 import com.android.tennistrackerapp.R;
+import com.android.tennistrackerapp.controller.adapters.MatchesListAdapter;
+import com.android.tennistrackerapp.controller.adapters.PlayerListAdapter;
 import com.android.tennistrackerapp.controller.fragments.HomeFragment;
 import com.android.tennistrackerapp.controller.fragments.ManageProfileFragment;
 import com.android.tennistrackerapp.controller.fragments.PlayersListFragment;
+import com.android.tennistrackerapp.controller.fragments.StatisticsFragment;
+import com.android.tennistrackerapp.model.Match;
 import com.android.tennistrackerapp.model.Player;
+import com.android.tennistrackerapp.model.ToastAssistant;
 import com.android.tennistrackerapp.model.database.DBManager;
 import com.google.android.material.navigation.NavigationView;
 
@@ -24,7 +29,9 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener,
+        PlayerListAdapter.OnPlayerClicked, MatchesListAdapter.OnMatchClickedListener {
 
     // ---------------------
     // CONSTANTS
@@ -48,16 +55,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //FOR FRAGMENTS
     // 1 - Declare fragment handled by Navigation Drawer
     private Fragment fragmentHome;
-    private Fragment fragmentManageProfile;
+    private Fragment fragmentManageNewProfile;
+    private Fragment fragmentManageUpdateProfile;
     private Fragment fragmentPlayersList;
+    private Fragment fragmentStatistics;
     private Fragment fragmentSettings;
 
     //FOR DATA
     // 2 - Identify each fragment with a number
     private static final int FRAGMENT_HOME = 0;
-    private static final int FRAGMENT_MANAGE_PROFILE = 1;
+    private static final int FRAGMENT_MANAGE_NEW_PROFILE = 1;
     private static final int FRAGMENT_SETTINGS = 2;
     private static final int FRAGMENT_PLAYERS_LIST = 4;
+
 
 
     @Override
@@ -65,8 +75,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-        justComingFromDelete();
         checkSavedState(savedInstanceState);
+        ToastAssistant.initToastAssistant(this);
 
         //Configure Drawer setup Views
         this.configureToolBar();
@@ -120,6 +130,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             this.currentPlayerId = list.get(0).getId();
         }
 
+        justComingFromDeleteOrUpdate();
+
         saveSharedPref();
     }
 
@@ -136,11 +148,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     //Coming from a delete player
-    private void justComingFromDelete() {
-        boolean isFromDelete = getIntent().getBooleanExtra(getResources().getString(R.string.FROM_DELETE), false);
+    private void justComingFromDeleteOrUpdate() {
+        boolean isFromDeleteOrUpdate = getIntent().getBooleanExtra(getResources().getString(R.string.FROM_DELETE_OR_UPDATE), false);
 
-        if(isFromDelete && this.fragmentManageProfile != null) {
-            getSupportFragmentManager().beginTransaction().remove(this.fragmentManageProfile).commit();
+        if(isFromDeleteOrUpdate) {
+            getIdWithSharedPref();
         }
     }
 
@@ -158,9 +170,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // Toolbar setup
     private void configureToolBar(){
         this.toolbar = findViewById(R.id.tool_bar);
-        //this.toolbar.setNavigationIcon(R.drawable.hamberger);
-        //setSupportActionBar(toolbar);
-
     }
 
     // Drawer Layout setup
@@ -189,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 showFragment(FRAGMENT_HOME);
                 break;
             case R.id.menu_item_new_player:
-                showFragment(FRAGMENT_MANAGE_PROFILE);
+                showFragment(FRAGMENT_MANAGE_NEW_PROFILE);
                 break;
             case R.id.menu_item_settings:
                 showFragment(FRAGMENT_SETTINGS);
@@ -211,8 +220,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case FRAGMENT_HOME :
                 this.showHomeFragment();
                 break;
-            case FRAGMENT_MANAGE_PROFILE:
-                this.showManageProfileFragment();
+            case FRAGMENT_MANAGE_NEW_PROFILE:
+                this.showManageProfileFragmentForNew();
                 break;
             case FRAGMENT_SETTINGS:
                 this.showSettingsFragment();
@@ -226,21 +235,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void showPayersListFragment() {
-        if (this.fragmentPlayersList == null) this.fragmentPlayersList = PlayersListFragment.newInstance();
+        if (this.fragmentPlayersList == null) this.fragmentPlayersList = PlayersListFragment.newInstance(this);
         this.startTransactionFragment(this.fragmentPlayersList);
     }
 
     private void showHomeFragment(){
-        if (this.fragmentHome == null) this.fragmentHome = HomeFragment.newInstance();
+        if (this.fragmentHome == null) this.fragmentHome = HomeFragment.newInstance(this);
         this.startTransactionFragment(this.fragmentHome);
     }
 
-    private void showManageProfileFragment(){
-        if (this.fragmentManageProfile == null) {
-            this.fragmentManageProfile = ManageProfileFragment
+    private void showManageProfileFragmentForNew(){
+        if (this.fragmentManageNewProfile == null) {
+            this.fragmentManageNewProfile = ManageProfileFragment
                     .newInstance(ManageProfileFragment.ProfileViewState.NEW_PROFILE, null);
         }
-        this.startTransactionFragment(this.fragmentManageProfile);
+        this.startTransactionFragment(this.fragmentManageNewProfile);
+    }
+
+    private void showManageProfileFragmentForUpdate(int id){
+        if (this.fragmentManageUpdateProfile == null) {
+            this.fragmentManageUpdateProfile = ManageProfileFragment
+                    .newInstance(ManageProfileFragment.ProfileViewState.UPDATE_PROFILE, id);
+        }
+        this.startTransactionFragment(this.fragmentManageUpdateProfile);
+    }
+
+    private void showStatisticFragment(Match match) {
+        if (this.fragmentStatistics == null) {
+            this.fragmentStatistics = StatisticsFragment
+                    .newInstance(match);
+        }
+        this.startTransactionFragment(this.fragmentStatistics);
     }
 
     private void showSettingsFragment(){
@@ -248,13 +273,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        this.startTransactionFragment(this.fragmentSettings);
     }
 
-    // ---
-
     // 3 - Generic method that will replace and show a fragment inside the MainActivity Frame Layout
     private void startTransactionFragment(Fragment fragment){
         if (!fragment.isVisible()){
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.main_frame_manager, fragment).commit();
         }
+    }
+
+    // -----------------------------------------
+    // onPlayerSelected Listener Implementation
+    // -----------------------------------------
+    @Override
+    public void onPlayerSelected(int playerId) {
+        if(this.fragmentManageUpdateProfile != null) {
+            this.fragmentManageUpdateProfile = null;
+        }
+        showManageProfileFragmentForUpdate(playerId);
+    }
+
+    // -----------------------------------------
+    // onMatchSelected Listener Implementation
+    // -----------------------------------------
+    @Override
+    public void onMatchSelected(Match match) {
+        if(this.fragmentStatistics != null) {
+            this.fragmentStatistics = null;
+        }
+        showStatisticFragment(match);
     }
 }

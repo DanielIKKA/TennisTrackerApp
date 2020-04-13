@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.android.tennistrackerapp.R;
+import com.android.tennistrackerapp.controller.adapters.MatchesListAdapter;
 import com.android.tennistrackerapp.model.database.DBManager;
 
 import java.util.Objects;
@@ -35,20 +36,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     // ------------------------------
     // ATTRIBUTES
     // ------------------------------
-    private DBManager manager;
+    private DBManager manager = DBManager.getInstance();
     private int currentPlayerId;
+    private MatchesListAdapter.OnMatchClickedListener listener;
 
     // ------------------------------
     // CONSTRUCTOR AND OVERRIDES
     // ------------------------------
-    public static HomeFragment newInstance() {
-        return new HomeFragment();
+    public static HomeFragment newInstance(MatchesListAdapter.OnMatchClickedListener callback) {
+        HomeFragment fragment =  new HomeFragment();
+        fragment.listener = callback;
+
+        return fragment;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        manager = DBManager.getInstance();
         getSharedPref();
     }
 
@@ -56,7 +60,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
         getSharedPref();
-
     }
 
     @Nullable
@@ -101,7 +104,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         if(listFragment == null) {
             // A. instantiate it
-            listFragment = ListHistoryFragment.newInstance(this.currentPlayerId);
+            listFragment = ListHistoryFragment.newInstance(this.currentPlayerId, listener);
             // B. add it to the FragmentManager
             getChildFragmentManager().beginTransaction()
                     .add(R.id.frame_list, listFragment)
