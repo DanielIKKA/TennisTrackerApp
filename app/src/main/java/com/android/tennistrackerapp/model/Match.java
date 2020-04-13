@@ -15,9 +15,9 @@ public class Match {
 
     @DatabaseField(generatedId = true, canBeNull = false)
     private int id;
-    @DatabaseField(foreign = true, canBeNull = false, columnName = WINNER_FIELD_NAME)
+    @DatabaseField(foreign = true, canBeNull = false, columnName = WINNER_FIELD_NAME, foreignAutoRefresh = true)
     private Player winner;
-    @DatabaseField(foreign = true, canBeNull = false, columnName = LOOSER_FIELD_NAME)
+    @DatabaseField(foreign = true, canBeNull = false, columnName = LOOSER_FIELD_NAME, foreignAutoRefresh = true)
     private Player looser;
     @DatabaseField
     private Date date;

@@ -25,14 +25,15 @@ import androidx.recyclerview.widget.RecyclerView;
  *  - https://openclassrooms.com/fr/courses/3499366-developpez-une-application-pour-android/3568556-affichez-des-listes-avec-recyclerview
  *  - https://www.youtube.com/watch?v=fxVeFwtIpVc
  */
-public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomViewHolder> {
+public class MatchesListAdapter extends RecyclerView.Adapter<MatchesListAdapter.CustomViewHolder> {
 
     private List<Match> data;
+    private OnMatchClickedListener listener;
 
     // Provide a reference to the views for each data item (cell)
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    static class CustomViewHolder extends RecyclerView.ViewHolder {
+    static class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private static final String CURRENT_ID = String.valueOf(R.string.comTennisTrackerCURRENT_ID);
         private static final String PREFERENCE_MANAGER = String.valueOf(R.string.comTennisTrackerPREF_MANAGER);
@@ -42,13 +43,18 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
 
         private Match data;
         private int currentId;
+        private OnMatchClickedListener listener;
 
-        CustomViewHolder(View cell) {
+        CustomViewHolder(View cell, OnMatchClickedListener callBack) {
             super(cell);
 
             //find cell's view
             this.image = cell.findViewById(R.id.cell_ball_state);
             this.title = cell.findViewById(R.id.cell_title);
+
+            this.listener = callBack;
+
+            cell.setOnClickListener(this);
 
             getSharedPref(cell.getContext());
         }
@@ -72,11 +78,17 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
             SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCE_MANAGER, Context.MODE_PRIVATE);
             this.currentId = sharedPref.getInt(CURRENT_ID, -1);
         }
+
+        @Override
+        public void onClick(View v) {
+            listener.onMatchSelected(this.data);
+        }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public CustomAdapter(List<Match> dataSet) {
+    public MatchesListAdapter(List<Match> dataSet, OnMatchClickedListener callBack) {
         this.data = dataSet;
+        this.listener = callBack;
     }
 
     @NonNull
@@ -85,7 +97,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         // create a new generic cell
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_home_cell_history, parent, false);
 
-        return new CustomViewHolder(v);
+        return new CustomViewHolder(v, listener);
     }
 
     @Override
@@ -97,5 +109,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     @Override
     public int getItemCount() {
         return this.data.size();
+    }
+
+    // ----------------------
+    public interface OnMatchClickedListener {
+        public void onMatchSelected(Match match);
     }
 }

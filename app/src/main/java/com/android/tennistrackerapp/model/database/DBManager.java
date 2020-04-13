@@ -61,9 +61,9 @@ public class DBManager {
         ArrayList<Player> players = (ArrayList<Player>) playerManager.getAll();
 
         if (players.isEmpty()) {
-            Player player1 = new Player("Daniel Ikka", 1, 21, "");
-            Player player2 = new Player("Victor Aymard", 2, 22, "");
-            Player player3 = new Player("Rene Cotti", 2, 22, "");
+            Player player1 = new Player("Daniel Ikka", 1, 21);
+            Player player2 = new Player("Victor Aymard", 2, 22);
+            Player player3 = new Player("Rene Cotti", 2, 22);
             this.playerManager.createOne(player1);
             this.playerManager.createOne(player2);
             this.playerManager.createOne(player3);
