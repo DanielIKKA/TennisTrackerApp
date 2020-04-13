@@ -4,11 +4,11 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.view.inspector.StaticInspectionCompanionProvider;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Objects;
 
 
 // --------------------------------------------
@@ -42,16 +42,24 @@ public class StorageUtil {
             e.printStackTrace();
         } finally {
             try {
-                Objects.requireNonNull(fos).close();
+                fos.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        return directory.getAbsolutePath();
+        return mypath.getAbsolutePath();
     }
 
     public Bitmap loadImageFromStorage(String path) {
         File f = new File(path, "profile.jpg");
         return BitmapFactory.decodeFile(path);
+    }
+
+    public boolean deleteFromStorage(String path) {
+        File f = new File(path);
+        if (f != null) {
+            f.delete();
+        }
+
     }
 }
