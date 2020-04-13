@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-        justComingFromDelete();
         checkSavedState(savedInstanceState);
         ToastAssistant.initToastAssistant(this);
 
@@ -127,6 +126,8 @@ public class MainActivity extends AppCompatActivity
             this.currentPlayerId = list.get(0).getId();
         }
 
+        justComingFromDeleteOrUpdate();
+
         saveSharedPref();
     }
 
@@ -143,11 +144,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     //Coming from a delete player
-    private void justComingFromDelete() {
-        boolean isFromDelete = getIntent().getBooleanExtra(getResources().getString(R.string.FROM_DELETE), false);
+    private void justComingFromDeleteOrUpdate() {
+        boolean isFromDeleteOrUpdate = getIntent().getBooleanExtra(getResources().getString(R.string.FROM_DELETE_OR_UPDATE), false);
 
-        if(isFromDelete && this.fragmentManageNewProfile != null) {
-            getSupportFragmentManager().beginTransaction().remove(this.fragmentManageNewProfile).commit();
+        if(isFromDeleteOrUpdate) {
+            getIdWithSharedPref();
         }
     }
 

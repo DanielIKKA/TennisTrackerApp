@@ -25,6 +25,7 @@
         android:textStyle="bold"
         style="@style/TextAppearance.MaterialComponents.Headline5"/>
 
+    <!-- Body -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/manage_profile_body_wrapper"
         android:layout_width="match_parent"
@@ -45,6 +46,19 @@
             app:layout_constraintTop_toTopOf="@id/manage_profile_image"
             app:layout_constraintStart_toEndOf="@id/manage_profile_image"
             app:layout_constraintEnd_toEndOf="parent"
+            />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/manage_profile_btn_current"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="@string/manage_profile_btn_current"
+            android:background="@color/green_tennisTracker"
+            android:textColor="@color/colorPrimary"
+
+            app:layout_constraintTop_toTopOf="@id/manage_profile_image"
+            app:layout_constraintEnd_toStartOf="@id/manage_profile_image"
+            app:layout_constraintStart_toStartOf="parent"
             />
 
         <!-- Image -->

@@ -51,6 +51,7 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
     private View mainView;
     private Button btnAction;
     private Button btnDelete;
+    private Button btnCurrent;
     private ImageView image;
     private TextView title;
     private ArrayList<EditText> fields = new ArrayList<>();
@@ -113,6 +114,7 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
         //common design elements
         this.btnAction = mainView.findViewById(R.id.manage_profile_btn_action);
         this.btnDelete = mainView.findViewById(R.id.manage_profile_btn_delete);
+        this.btnCurrent = mainView.findViewById(R.id.manage_profile_btn_current);
         this.image = mainView.findViewById(R.id.manage_profile_image);
         this.title = mainView.findViewById(R.id.manage_profile_title);
         fields.add((EditText) mainView.findViewById(R.id.manage_profile_field_name));
@@ -125,6 +127,7 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
         //set listeners
         this.btnAction.setOnClickListener(this);
         this.btnDelete.setOnClickListener(this);
+        this.btnCurrent.setOnClickListener(this);
         this.image.setOnClickListener(this);
         this.mainView.findViewById(R.id.manage_profile_layout).setOnClickListener(this);
 
@@ -146,11 +149,13 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
             this.btnAction.setText(context.getResources().getText(R.string.manage_profile_btn_action_new_profile));
             this.setBtnState(BtnState.DISABLE);
             this.btnDelete.setVisibility(View.INVISIBLE);
+            this.btnDelete.setVisibility(View.INVISIBLE);
         } else if (state.equals(ProfileViewState.UPDATE_PROFILE)) {
             this.title.setText(context.getResources().getText(R.string.manage_profile_title_update));
             this.btnAction.setText(context.getResources().getText(R.string.manage_profile_btn_action_update_profile));
             this.setBtnState(BtnState.ENABLE);
             this.btnDelete.setVisibility(View.VISIBLE);
+            this.btnCurrent.setVisibility(View.VISIBLE);
 
             if(profileImage != null) {
                 this.image.setImageBitmap(profileImage);
@@ -196,10 +201,13 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
             case ENABLE:
                 btnAction.setAlpha(1);
                 this.btnAction.setEnabled(true);
+                this.btnCurrent.setEnabled(true);
                 break;
             case DISABLE:
                 btnAction.setAlpha((float) 0.5);
+                btnCurrent.setAlpha((float) 0.5);
                 this.btnAction.setEnabled(false);
+                this.btnCurrent.setEnabled(false);
                 break;
         }
     }
@@ -263,7 +271,26 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
         //TODO: display Dialog and return to MainActivity
 
         Intent i = new Intent(this.getContext(), MainActivity.class);
-        i.putExtra(context.getResources().getString(R.string.FROM_DELETE), true);
+        i.putExtra(context.getResources().getString(R.string.FROM_DELETE_OR_UPDATE), true);
+        startActivity(i);
+    }
+
+    private void setCurrentPlayer() {
+        //check if's the current players and update sharedPref if need be
+        Context context = Objects.requireNonNull(getContext());
+        SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCE_MANAGER, Context.MODE_PRIVATE);
+        Integer idShared = sharedPref.getInt(CURRENT_ID, -1);
+
+        if(!idShared.equals(player.getId())) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt(CURRENT_ID, player.getId());
+            editor.apply();
+        }
+
+        //TODO: display Dialog and return to MainActivity
+
+        Intent i = new Intent(this.getContext(), MainActivity.class);
+        i.putExtra(context.getResources().getString(R.string.FROM_DELETE_OR_UPDATE), true);
         startActivity(i);
     }
 
@@ -283,6 +310,8 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
                 }
             } else if(v.equals(this.btnDelete)) {
                 delete();
+            } else if(v.equals(this.btnCurrent)) {
+                setCurrentPlayer();
             } else if(v.equals(mainView.findViewById(R.id.manage_profile_layout))) {
                 hideSoftKeyBoard();
             } else if(v.equals(this.image)) {
