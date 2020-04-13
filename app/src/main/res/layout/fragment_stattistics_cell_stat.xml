@@ -8,26 +8,27 @@
     android:paddingHorizontal="15dp"
     android:text="dfsd"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
     <TextView
         android:id="@+id/statistics_cell_player1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1"
-        android:textStyle="bold"
+        android:layout_weight="1"
         android:gravity="center"
-        android:layout_weight="1"/>
+        android:text="15%"
+        android:textStyle="bold" />
     <TextView
         android:id="@+id/statistics_cell_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Aces"
         android:gravity="center"
-        android:layout_weight="10"/>
+        android:layout_weight="15"/>
     <TextView
         android:id="@+id/statistics_cell_player2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2"
+        android:text="20%"
         android:textStyle="bold"
         android:gravity="center"
         android:layout_weight="1"/>

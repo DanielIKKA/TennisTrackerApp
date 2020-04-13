@@ -69,9 +69,9 @@ public class DBManager {
             this.playerManager.createOne(player3);
 
             Match match1 = new Match(player1, player2, new Date(), null);
-            Match match2 = new Match(player2, player1, new Date(), null);
+            Match match2 = new Match(player3, player1, new Date(), null);
             this.matchManager.createOne(match1); // Daniel - Victor
-            this.matchManager.createOne(match2); // Victor - Daniel
+            this.matchManager.createOne(match2); // Rene - Daniel
 
             MatchStat Stat1_1 = new MatchStat(match1, match1.getWinner());
             MatchStat Stat1_2 = new MatchStat(match1, match1.getLooser());

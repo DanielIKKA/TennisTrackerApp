@@ -159,7 +159,7 @@
                 android:layout_marginTop="75dp"
 
                 android:background="@drawable/statistics_info_wrapper"
-                android:paddingTop="50dp"
+                android:paddingTop="70dp"
                 android:paddingHorizontal="15dp"/>
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -175,7 +175,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
 
-                app:layout_constraintHorizontal_bias="0.2"
+                app:layout_constraintHorizontal_bias="0.25"
                 app:layout_constraintVertical_bias="0"
                 app:layout_constraintWidth_percent="0.15"
                 app:layout_constraintDimensionRatio="2:1"
@@ -194,7 +194,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
 
-                app:layout_constraintHorizontal_bias="0.8"
+                app:layout_constraintHorizontal_bias="0.75"
                 />
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/statistics_stat_name1"
