@@ -33,6 +33,7 @@
     <!-- List Players fragment -->
     <string name="player_list_title">ALL PLAYERS</string>
     <string name="manage_profile_btn_current">CURRENT</string>
+    <string name="statistics_title_default">Statistics</string>
 
 
 </resources>
