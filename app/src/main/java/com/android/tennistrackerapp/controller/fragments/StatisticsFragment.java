@@ -46,6 +46,16 @@ public class StatisticsFragment extends Fragment {
     private TextView name2;
     private ImageView profile1;
     private ImageView profile2;
+    private TextView resultName1;
+    private TextView resultName2;
+
+    private TextView box1_1;
+    private TextView box2_1;
+    private TextView box3_1;
+    private TextView box1_2;
+    private TextView box2_2;
+    private TextView box3_2;
+
 
 
     // -----------------------------------
@@ -91,6 +101,18 @@ public class StatisticsFragment extends Fragment {
 
         this.profile1 = mainView.findViewById(R.id.statistics_stat_image1);
         this.profile2 = mainView.findViewById(R.id.statistics_stat_image2);
+
+        this.resultName1 = mainView.findViewById(R.id.statistics_result_player1);
+        this.resultName2 = mainView.findViewById(R.id.statistics_result_player2);
+
+        this.box1_1 =mainView.findViewById(R.id.statistics_result_game1_1);
+        this.box2_1 =mainView.findViewById(R.id.statistics_result_game2_1);
+        this.box3_1 =mainView.findViewById(R.id.statistics_result_game3_1);
+
+        this.box1_2 =mainView.findViewById(R.id.statistics_result_game1_2);
+        this.box2_2 =mainView.findViewById(R.id.statistics_result_game2_2);
+        this.box3_2 =mainView.findViewById(R.id.statistics_result_game3_2);
+
     }
 
     private void setupUI(){
@@ -101,6 +123,22 @@ public class StatisticsFragment extends Fragment {
         if(match.getLocation() == null) {
             this.locationTitle.setText("N/A");
         }
+
+        //Results
+        this.box1_1.setText((statistics.get(0).getGames_set1() == null) ? String.valueOf(0) : String.valueOf(statistics.get(0).getGames_set1()));
+        this.box2_1.setText((statistics.get(0).getGames_set2() == null) ? String.valueOf(0) : String.valueOf(statistics.get(0).getGames_set2()));
+        this.box1_2.setText((statistics.get(1).getGames_set1() == null) ? String.valueOf(0) : String.valueOf(statistics.get(1).getGames_set1()));
+        this.box2_2.setText((statistics.get(1).getGames_set2() == null) ? String.valueOf(0) : String.valueOf(statistics.get(1).getGames_set2()));
+
+        if(statistics.get(0).getGames_set3() != null) {
+            this.box3_1.setText(statistics.get(0).getGames_set3());
+            this.box3_2.setText(statistics.get(1).getGames_set3());
+        } else {
+            this.box3_1.setVisibility(View.INVISIBLE);
+            this.box3_2.setVisibility(View.INVISIBLE);
+        }
+
+
 
         //Images
         Player p1 = this.statistics.get(0).getPlayer();
@@ -116,6 +154,8 @@ public class StatisticsFragment extends Fragment {
         //names
         this.name1.setText(p1.getName());
         this.name2.setText(p2.getName());
+        this.resultName1.setText(p1.getName());
+        this.resultName2.setText(p2.getName());
 
         // Statistics
         for(String key : this.statMapped1.keySet()) {
