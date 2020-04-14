@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/new_match_wrapper"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".controller.fragments.NewMatchFragment"
+    android:background="@color/colorAccent_primary"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Header -->
+    <TextView
+        android:id="@+id/new_match_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:text="@string/new_match"
+        android:textAlignment="center"
+        android:textColor="@color/text_dark"
+        android:textStyle="bold"
+        style="@style/TextAppearance.MaterialComponents.Headline5"
+
+        android:layout_marginVertical="@dimen/header_vertical_margin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/new_match_body_wrapper"
+        />
+
+    <!-- Body -->
+    <ScrollView
+        android:id="@+id/new_match_body_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+
+        app:layout_constraintTop_toBottomOf="@id/new_match_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/list_wrapper"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/new_match_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="30dp"
+            android:paddingBottom="200dp"
+            android:paddingHorizontal="20dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/new_match_image"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+
+                android:src="@drawable/default_match_image"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+
+                app:layout_constraintWidth_percent="0.2"
+                app:layout_constraintDimensionRatio="1"
+                />
+            <ImageView
+                android:id="@+id/new_match_image_camera"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+
+                app:layout_constraintTop_toTopOf="@id/new_match_image"
+                app:layout_constraintBottom_toBottomOf="@id/new_match_image"
+                app:layout_constraintStart_toStartOf="@id/new_match_image"
+                app:layout_constraintEnd_toEndOf="@id/new_match_image"
+
+                android:src="@drawable/camera"
+
+                app:layout_constraintWidth_percent="0.05"
+                app:layout_constraintDimensionRatio="5:4"
+                app:layout_constraintVertical_bias="0.9999"
+                app:layout_constraintHorizontal_bias="1"
+                />
+
+
+            <Spinner
+                android:id="@+id/new_match_winner"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                app:layout_constraintTop_toBottomOf="@id/new_match_image"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="50dp"
+                app:layout_constraintHorizontal_bias="0.2"
+                app:layout_constraintWidth_percent="0.3"
+                />
+
+
+            <Spinner
+                android:id="@+id/new_match_looser"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+
+                android:layout_marginTop="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.7"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/new_match_image"
+                app:layout_constraintWidth_percent="0.3" />
+
+            <TextView
+                android:id="@+id/new_match_result_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:text="@string/scores_please_set_to_0_0_last_set_if_not_played"
+                android:gravity="center"
+                style="@style/TextAppearance.AppCompat.Menu"
+
+                app:layout_constraintTop_toBottomOf="@id/new_match_winner"
+                android:layout_marginTop="30dp"
+                android:paddingVertical="10dp"
+                />
+            <LinearLayout
+                android:id="@+id/new_match_layout_winner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintWidth_percent="0.5"
+                app:layout_constraintTop_toBottomOf="@id/new_match_result_title">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginVertical="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/game_1"
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:textStyle="bold"/>
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/new_match_winner_game_1"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="0"
+                        android:inputType="number"
+                        android:textAlignment="center"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginVertical="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/game_2"
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:textStyle="bold"/>
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/new_match_winner_game_2"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="0"
+                        android:inputType="number"
+                        android:textAlignment="center"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginVertical="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/game_3"
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:textStyle="bold"/>
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/new_match_winner_game_3"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="0"
+                        android:inputType="number"
+                        android:textAlignment="center"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/new_match_layout_looser"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintWidth_percent="0.5"
+                app:layout_constraintTop_toBottomOf="@id/new_match_result_title"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginVertical="10dp">
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/new_match_looser_game_1"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="0"
+                        android:inputType="number"
+                        android:textAlignment="center"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/game_1"
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:textStyle="bold"
+                        android:textAlignment="textEnd"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="10dp"
+                    android:orientation="horizontal">
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/new_match_looser_game_2"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:text="0"
+                        android:textAlignment="center" />
+                    <TextView
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/game_2"
+                        android:textStyle="bold"
+                        android:textAlignment="textEnd"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginVertical="10dp">
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/new_match_looser_game_3"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="0"
+                        android:inputType="number"
+                        android:textAlignment="center"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/game_3"
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:textStyle="bold"
+                        android:textAlignment="textEnd"/>
+                </LinearLayout>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/new_match_stat_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:text="@string/statistics_theses_fields_are_not_requiere"
+                android:gravity="center"
+                style="@style/TextAppearance.AppCompat.Menu"
+
+                app:layout_constraintTop_toBottomOf="@id/new_match_layout_winner"
+                android:layout_marginTop="30dp"
+                android:paddingVertical="10dp"
+                />
+
+            <LinearLayout
+                android:id="@+id/new_match_stat_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+
+                android:paddingVertical="10dp"
+                app:layout_constraintTop_toBottomOf="@id/new_match_stat_title" />
+
+            <Button
+                android:id="@+id/new_match_btn_create"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/new_match_stat_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintWidth_percent="0.35"
+
+                android:layout_marginTop="40dp"
+                android:text="@string/manage_profile_btn_action_new_profile"
+                android:background="@color/design_default_color_primary"
+                android:textColor="@color/colorPrimary"
+                android:padding="5dp"
+                />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/new_match_winner"
+                app:layout_constraintBottom_toTopOf="@+id/new_match_winner"
+                app:layout_constraintEnd_toEndOf="@+id/new_match_winner"
+                app:layout_constraintStart_toStartOf="@+id/new_match_winner"
+                app:layout_constraintTop_toBottomOf="@+id/new_match_image"
+                app:layout_constraintVertical_bias="0.7"/>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/new_match_looser"
+                app:layout_constraintBottom_toTopOf="@+id/new_match_looser"
+                app:layout_constraintEnd_toEndOf="@+id/new_match_looser"
+                app:layout_constraintStart_toStartOf="@+id/new_match_looser"
+                app:layout_constraintTop_toBottomOf="@+id/new_match_image"
+                app:layout_constraintVertical_bias="0.7"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

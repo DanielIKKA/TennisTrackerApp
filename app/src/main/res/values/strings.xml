@@ -6,47 +6,47 @@
     <string name="profile_card_default_age">21 ans</string>
     <string name="profile_card_default_name">player\'s name</string>
 
-    <string name="profile_card_rank">rank:</string>
-    <string name="profile_card_age">years</string>
+    <string name="profile_card_rank" translatable="false">rank:</string>
+    <string name="profile_card_age" translatable="false">years</string>
 
     <!-- List Fragment Strings -->
-    <string name="history_list_title">Last Matches</string>
+    <string name="history_list_title" translatable="false">Last Matches</string>
     <string name="default_cell_title">adversary\nLieu - 07/07/2019</string>
 
     <!-- MenuDrawer Strings -->
-    <string name="menu">MENU</string>
-    <string name="menu_title_item_player_list">Manage Players</string>
-    <string name="menu_title_item_home">Home</string>
-    <string name="menu_title_item_new_player">New player</string>
-    <string name="menu_title_item_settings">Settings</string>
+    <string name="menu" translatable="false">MENU</string>
+    <string name="menu_title_item_player_list" translatable="false">Manage Players</string>
+    <string name="menu_title_item_home" translatable="false">Home</string>
+    <string name="menu_title_item_new_player" translatable="false">New player</string>
+    <string name="menu_title_item_settings" translatable="false">Settings</string>
 
     <!-- Manage_profile -->
-    <string name="manage_profile_title_new">NEW PROFILE</string>
-    <string name="manage_profile_placeholder_age">Age :</string>
-    <string name="manage_profile_placeholder_rank">Rank :</string>
-    <string name="manage_profile_placeholder_name">Name :</string>
-    <string name="manage_profile_btn_delete">Delete</string>
-    <string name="manage_profile_btn_action_new_profile">CREATE</string>
-    <string name="manage_profile_btn_action_update_profile">UPDATE</string>
-    <string name="manage_profile_title_update">EDIT PROFILE</string>
+    <string name="manage_profile_title_new" translatable="false">NEW PROFILE</string>
+    <string name="manage_profile_placeholder_age" translatable="false">Age :</string>
+    <string name="manage_profile_placeholder_rank" translatable="false">Rank :</string>
+    <string name="manage_profile_placeholder_name" translatable="false">Name :</string>
+    <string name="manage_profile_btn_delete" translatable="false">Delete</string>
+    <string name="manage_profile_btn_action_new_profile" translatable="false">CREATE</string>
+    <string name="manage_profile_btn_action_update_profile" translatable="false">UPDATE</string>
+    <string name="manage_profile_title_update" translatable="false">EDIT PROFILE</string>
 
     <!-- List Players fragment -->
-    <string name="player_list_title">ALL PLAYERS</string>
-    <string name="manage_profile_btn_current">CURRENT</string>
-    <string name="statistics_title_default">Statistics</string>
+    <string name="player_list_title" translatable="false">ALL PLAYERS</string>
+    <string name="manage_profile_btn_current" translatable="false">CURRENT</string>
+    <string name="statistics_title_default" translatable="false">Statistics</string>
     <string name="statistics_default_name">name1</string>
-    <string name="menu_item_new_match">New match</string>
+    <string name="menu_item_new_match" translatable="false">New match</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="new_match_winner">Winner</string>
-    <string name="new_match_looser">Looser</string>
-    <string name="game_1">Game 1</string>
-    <string name="game_2">Game 2</string>
-    <string name="game_3">Game 3</string>
-    <string name="statistics_theses_fields_are_not_requiere">Statistics (theses fields are not requiere)</string>
-    <string name="scores_please_set_to_0_0_last_set_if_not_played">Scores (please set to 0 0 last set if not played)</string>
-    <string name="new_match">NEW MATCH</string>
+    <string name="new_match_winner" translatable="false">Winner</string>
+    <string name="new_match_looser" translatable="false">Looser</string>
+    <string name="game_1" translatable="false">Game 1</string>
+    <string name="game_2" translatable="false">Game 2</string>
+    <string name="game_3" translatable="false">Game 3</string>
+    <string name="statistics_theses_fields_are_not_requiere" translatable="false">Statistics (theses fields are not requiere)</string>
+    <string name="scores_please_set_to_0_0_last_set_if_not_played" translatable="false">Scores (please set to 0 0 last set if not played)</string>
+    <string name="new_match" translatable="false">NEW MATCH</string>
 
 
 </resources>

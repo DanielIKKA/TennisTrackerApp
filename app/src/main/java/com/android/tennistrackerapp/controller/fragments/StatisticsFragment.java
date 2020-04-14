@@ -133,12 +133,18 @@ public class StatisticsFragment extends Fragment {
         this.box1_2.setText((statistics.get(1).getGames_set1() == null) ? String.valueOf(0) : String.valueOf(statistics.get(1).getGames_set1()));
         this.box2_2.setText((statistics.get(1).getGames_set2() == null) ? String.valueOf(0) : String.valueOf(statistics.get(1).getGames_set2()));
 
-        if(statistics.get(0).getGames_set3() != null) {
-            this.box3_1.setText(String.valueOf(statistics.get(0).getGames_set3()));
-            this.box3_2.setText(String.valueOf(statistics.get(1).getGames_set3()));
-        } else {
+        if((statistics.get(0).getGames_set3() == null && statistics.get(1).getGames_set3() == null)) {
             this.box3_1.setVisibility(View.INVISIBLE);
             this.box3_2.setVisibility(View.INVISIBLE);
+        } else {
+            if(statistics.get(0).getGames_set3() == 0 && statistics.get(1).getGames_set3() == 0) {
+                this.box3_1.setVisibility(View.INVISIBLE);
+                this.box3_2.setVisibility(View.INVISIBLE);
+            } else {
+                this.box3_1.setText(String.valueOf(statistics.get(0).getGames_set3()));
+                this.box3_2.setText(String.valueOf(statistics.get(1).getGames_set3()));
+            }
+
         }
 
         //Images
