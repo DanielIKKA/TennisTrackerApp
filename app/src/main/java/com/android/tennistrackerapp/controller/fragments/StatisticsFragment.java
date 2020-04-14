@@ -1,5 +1,6 @@
 package com.android.tennistrackerapp.controller.fragments;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,22 +16,24 @@ import com.android.tennistrackerapp.model.MatchStat;
 import com.android.tennistrackerapp.model.Player;
 import com.android.tennistrackerapp.model.database.DBManager;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class StatisticsFragment extends Fragment {
+public class StatisticsFragment extends Fragment implements TaskManagerStat.Listeners {
 
     // ------------------------------
     // ATTRIBUTES
     // ------------------------------
-    private DBManager manager = DBManager.getInstance();
-    private Match match;
-    private ArrayList<MatchStat> statistics;
+    DBManager manager = DBManager.getInstance();
+    Match match;
+    ArrayList<MatchStat> statistics;
 
     HashMap<String, Object> statMapped1;
     HashMap<String, Object> statMapped2;
@@ -66,17 +69,22 @@ public class StatisticsFragment extends Fragment {
         StatisticsFragment fragment = new StatisticsFragment();
 
         // TODO: AsyncTask within onCreateView
-        fragment.match = fragment.manager.getMatchManager().getById(match.getId());
-
-        fragment.statistics = fragment.manager.getMatchStatManager().getAllMatchWithMatchId(match.getId());
-        fragment.statistics.get(0).setPlayer(fragment.manager.getPlayerManager().getById(fragment.statistics.get(0).getPlayer().getId()));
-        fragment.statistics.get(1).setPlayer(fragment.manager.getPlayerManager().getById(fragment.statistics.get(1).getPlayer().getId()));
-
-        fragment.statMapped1 = MatchStat.getNewDictionary(fragment.statistics.get(0));
-        fragment.statMapped2 = MatchStat.getNewDictionary(fragment.statistics.get(1));
-
-
+        fragment.match = match;
+//        fragment.match = fragment.manager.getMatchManager().getById(match.getId());
+//
+//        fragment.statistics = fragment.manager.getMatchStatManager().getAllMatchWithMatchId(match.getId());
+//        fragment.statistics.get(0).setPlayer(fragment.manager.getPlayerManager().getById(fragment.statistics.get(0).getPlayer().getId()));
+//        fragment.statistics.get(1).setPlayer(fragment.manager.getPlayerManager().getById(fragment.statistics.get(1).getPlayer().getId()));
+//
+//        fragment.statMapped1 = MatchStat.getNewDictionary(fragment.statistics.get(0));
+//        fragment.statMapped2 = MatchStat.getNewDictionary(fragment.statistics.get(1));
         return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        new TaskManagerStat(this, match, this).execute();
     }
 
     @Override
@@ -85,7 +93,6 @@ public class StatisticsFragment extends Fragment {
         this.mainView = inflater.inflate(R.layout.fragment_statistics, container, false);
 
         this.findViews();
-        this.setupUI();
 
         return mainView;
     }
@@ -195,7 +202,54 @@ public class StatisticsFragment extends Fragment {
         return v;
     }
 
+    @Override
+    public void onPostExecuted(StatisticsFragment fragment) {
+        this.match = fragment.match;
+        this.statMapped1 = fragment.statMapped1;
+        this.statMapped2 = fragment.statMapped2;
+        this.statistics =  fragment.statistics;
+        this.setupUI();
+    }
+
     // ---------------------
     // Listener
     // ---------------------
+}
+
+class TaskManagerStat extends AsyncTask<Void, Void, StatisticsFragment> {
+
+    private Match match;
+    private StatisticsFragment fragment;
+    public interface Listeners {
+        void onPostExecuted(StatisticsFragment fragment);
+    }
+
+    private final WeakReference<Listeners>callback;
+
+    TaskManagerStat(StatisticsFragment f, Match match, Listeners callback) {
+        this.match = match;
+        this.fragment = f;
+        this.callback = new WeakReference<>(callback);
+    }
+
+
+    @Override
+    protected StatisticsFragment doInBackground(Void... voids) {
+        fragment.match = fragment.manager.getMatchManager().getById(match.getId());
+
+        fragment.statistics = fragment.manager.getMatchStatManager().getAllMatchWithMatchId(match.getId());
+        fragment.statistics.get(0).setPlayer(fragment.manager.getPlayerManager().getById(fragment.statistics.get(0).getPlayer().getId()));
+        fragment.statistics.get(1).setPlayer(fragment.manager.getPlayerManager().getById(fragment.statistics.get(1).getPlayer().getId()));
+
+        fragment.statMapped1 = MatchStat.getNewDictionary(fragment.statistics.get(0));
+        fragment.statMapped2 = MatchStat.getNewDictionary(fragment.statistics.get(1));
+
+        return fragment;
+    }
+
+    @Override
+    protected void onPostExecute(StatisticsFragment fragment) {
+        super.onPostExecute(fragment);
+        this.callback.get().onPostExecuted(fragment);
+    }
 }
