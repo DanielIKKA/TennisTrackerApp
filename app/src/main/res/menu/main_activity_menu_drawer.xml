@@ -16,16 +16,20 @@
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/menu_item_new_player"
-                    android:icon="@drawable/baseline_home_black_24dp"
+                    android:icon="@drawable/add_person"
                     android:title="@string/menu_title_item_new_player"
                     />
                 <item
+                    android:id="@+id/menu_item_new_match"
+                    android:icon="@drawable/tennis"
+                    android:title="@string/menu_item_new_match"/>
+                <item
                     android:id="@+id/menu_item_player_list"
-                    android:icon="@drawable/baseline_home_black_24dp"
+                    android:icon="@drawable/group"
                     android:title="@string/menu_title_item_player_list"/>
                 <item
                     android:id="@+id/menu_item_settings"
-                    android:icon="@drawable/baseline_home_black_24dp"
+                    android:icon="@drawable/settings"
                     android:title="@string/menu_title_item_settings" />
             </group>
         </menu>

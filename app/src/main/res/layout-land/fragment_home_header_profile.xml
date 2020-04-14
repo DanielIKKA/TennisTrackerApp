@@ -2,10 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="300dp"
+    android:layout_height="match_parent"
     android:background="@android:color/transparent"
-    android:layout_marginVertical="@dimen/header_vertical_margin"
+
     android:layout_marginHorizontal="10dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -20,7 +20,7 @@
         app:layout_constraintDimensionRatio="1:1"
 
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintWidth_percent="0.40" />
+        app:layout_constraintWidth_percent="0.70" />
 
     <View
         android:id="@+id/header_image_circle_dashed"
@@ -43,11 +43,11 @@
         android:orientation="vertical"
 
         android:paddingHorizontal="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/header_image_circle_dashed"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/header_profile_image"
-
-        app:layout_constraintTop_toTopOf="@id/header_profile_image">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/header_name_player"
@@ -57,6 +57,7 @@
             android:layout_marginBottom="25dp"
             android:maxLines="1"
             android:text="@string/profile_card_default_name"
+            android:gravity="center"
             style="@style/TextAppearance.MaterialComponents.Headline5"
             android:textStyle="bold"/>
 
@@ -66,7 +67,7 @@
             android:layout_height="wrap_content"
 
             android:layout_marginVertical="5dp"
-            android:layout_marginStart="20dp"
+            android:gravity="center"
             android:text="@string/profile_card_default_rank"
 
             android:textColor="@color/text_dark"
@@ -78,9 +79,9 @@
             android:layout_height="wrap_content"
 
             android:layout_marginVertical="5dp"
-            android:layout_marginStart="20dp"
 
             android:text="@string/profile_card_default_age"
+            android:gravity="center"
             android:textColor="@color/text_dark"
             style="@style/TextAppearance.AppCompat.Medium" />
     </LinearLayout>

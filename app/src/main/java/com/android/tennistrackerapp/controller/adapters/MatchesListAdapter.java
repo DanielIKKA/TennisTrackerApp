@@ -60,6 +60,7 @@ public class MatchesListAdapter extends RecyclerView.Adapter<MatchesListAdapter.
         }
 
         void initWithData(Match data) {
+            this.data = data;
             Player winner = data.getWinner();
             Player looser = data.getLooser();
 

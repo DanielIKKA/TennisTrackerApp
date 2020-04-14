@@ -11,6 +11,7 @@ import com.android.tennistrackerapp.controller.adapters.MatchesListAdapter;
 import com.android.tennistrackerapp.controller.adapters.PlayerListAdapter;
 import com.android.tennistrackerapp.controller.fragments.HomeFragment;
 import com.android.tennistrackerapp.controller.fragments.ManageProfileFragment;
+import com.android.tennistrackerapp.controller.fragments.NewMatchFragment;
 import com.android.tennistrackerapp.controller.fragments.PlayersListFragment;
 import com.android.tennistrackerapp.controller.fragments.StatisticsFragment;
 import com.android.tennistrackerapp.model.Match;
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity
     private Fragment fragmentManageUpdateProfile;
     private Fragment fragmentPlayersList;
     private Fragment fragmentStatistics;
+    private Fragment fragmentNewMatch;
     private Fragment fragmentSettings;
 
     //FOR DATA
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity
     private static final int FRAGMENT_MANAGE_NEW_PROFILE = 1;
     private static final int FRAGMENT_SETTINGS = 2;
     private static final int FRAGMENT_PLAYERS_LIST = 4;
+    private static final int FRAGMENT_NEW_MATCH = 5;
 
 
 
@@ -206,6 +209,8 @@ public class MainActivity extends AppCompatActivity
             case R.id.menu_item_player_list:
                 showFragment(FRAGMENT_PLAYERS_LIST);
                 break;
+            case R.id.menu_item_new_match:
+                showFragment(FRAGMENT_NEW_MATCH);
             default:
                 break;
         }
@@ -229,9 +234,19 @@ public class MainActivity extends AppCompatActivity
             case FRAGMENT_PLAYERS_LIST:
                 this.showPayersListFragment();
                 break;
+            case FRAGMENT_NEW_MATCH:
+                this.showNewMatchFragment();
+                break;
             default:
                 break;
         }
+    }
+
+    private void showNewMatchFragment() {
+        if (this.fragmentNewMatch == null) {
+            this.fragmentNewMatch = NewMatchFragment.newInstance();
+        }
+        this.startTransactionFragment(this.fragmentNewMatch);
     }
 
     private void showPayersListFragment() {

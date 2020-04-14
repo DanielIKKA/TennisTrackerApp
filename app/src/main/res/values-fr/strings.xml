@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TennisTrackerApp</string>
+    <string name="profile_card_rank" translatable="false">rang:</string>
+    <string name="profile_card_age" translatable="false">années</string>
+    <string name="history_list_title" translatable="false">Derniers Matchs</string>
+    <string name="menu_title_item_player_list" translatable="false">Gérer les Joueurs</string>
+    <string name="menu_title_item_home" translatable="false">Accueil</string>
+    <string name="menu_title_item_new_player" translatable="false">Nouveau Joueur</string>
+    <string name="menu_title_item_settings" translatable="false">Réglages</string>
+    <string name="manage_profile_title_new" translatable="false">NOUVEAU PROFILE</string>
+    <string name="manage_profile_placeholder_rank" translatable="false">Rang :</string>
+    <string name="manage_profile_placeholder_name" translatable="false">"Nom :"</string>
+    <string name="manage_profile_btn_delete" translatable="false">Supp</string>
+    <string name="manage_profile_btn_action_new_profile" translatable="false">CREER</string>
+    <string name="manage_profile_btn_action_update_profile" translatable="false">MIS A JOUR</string>
+    <string name="manage_profile_title_update" translatable="false">MODIFIER</string>
+    <string name="player_list_title" translatable="false">TOUS LES JOUEURS</string>
+    <string name="manage_profile_btn_current" translatable="false">CHANGER</string>
+    <string name="statistics_title_default" translatable="false">STATISTIQUES</string>
+    <string name="menu_item_new_match" translatable="false">Nouveau Match</string>
+    <string name="new_match_winner" translatable="false">GAGNANT</string>
+    <string name="new_match_looser" translatable="false">PERDANT</string>
+    <string name="game_1" translatable="false">JEU 1</string>
+    <string name="game_2" translatable="false">JEU 2</string>
+    <string name="game_3" translatable="false">JEU 3</string>
+    <string name="scores_please_set_to_0_0_last_set_if_not_played" translatable="false">Score (mettre a 0 le dernier set si pas joué)</string>
+    <string name="statistics_theses_fields_are_not_requiere" translatable="false">Stat (les champs suivants ne sont pas obigatoires</string>
+    <string name="new_match" translatable="false">NOUVEAU MATCH</string>
+    <string name="view_more">Plus</string>
+    <string name="view_less">Moins</string>
+</resources>
