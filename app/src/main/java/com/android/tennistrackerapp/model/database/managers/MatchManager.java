@@ -71,4 +71,13 @@ public class MatchManager {
             return new ArrayList<>();
         }
     }
+
+    public Match getById(int id) {
+        try {
+            return this.dao.queryForId(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

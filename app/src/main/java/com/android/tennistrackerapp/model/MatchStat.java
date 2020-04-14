@@ -1,6 +1,5 @@
 package com.android.tennistrackerapp.model;
 
-import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -35,7 +34,6 @@ public class MatchStat {
     @DatabaseField private Integer nbWinPoint;
     @DatabaseField private Integer nbWinGame;
     @DatabaseField private Integer maxGameSeries;
-    @DatabaseField(dataType = DataType.BYTE_ARRAY) private byte[] image;
     @DatabaseField private Integer games_set1;
     @DatabaseField private Integer games_set2;
     @DatabaseField private Integer games_set3;
@@ -62,12 +60,12 @@ public class MatchStat {
 
     public MatchStat(Match match, Player player) {
         this(match, player, null,null, null, null,null,null,
-                null,null,null,
+                null,null,
                 null,null,null);
     }
 
     public MatchStat(Match match, Player player, Integer aces, Integer nbDoubleFault, Float percentFirstService, Float percentSecondService, Integer nbBreakBalls,
-                     Integer nbWinPoint, Integer nbWinGame, Integer maxGameSeries, byte[] image, Integer games_set1, Integer games_set2, Integer games_set3) {
+                     Integer nbWinPoint, Integer nbWinGame, Integer maxGameSeries, Integer games_set1, Integer games_set2, Integer games_set3) {
         this.nbAces= aces;
         this.match = match;
         this.player = player;
@@ -78,7 +76,6 @@ public class MatchStat {
         this.nbWinPoint = nbWinPoint;
         this.nbWinGame = nbWinGame;
         this.maxGameSeries = maxGameSeries;
-        this.image = image;
         this.games_set1 = games_set1;
         this.games_set2 = games_set2;
         this.games_set3 = games_set3;
@@ -97,7 +94,6 @@ public class MatchStat {
     public Integer getNbWinPoint() { return nbWinPoint; }
     public Integer getNbWinGame() { return nbWinGame; }
     public Integer getMaxGameSeries() { return maxGameSeries; }
-    public byte[] getImage() { return image; }
     public Integer getGames_set1() {  return games_set1; }
     public Integer getGames_set2() { return games_set2; }
     public Integer getGames_set3() { return games_set3; }

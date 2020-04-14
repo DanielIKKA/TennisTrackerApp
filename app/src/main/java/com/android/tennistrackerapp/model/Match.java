@@ -23,6 +23,7 @@ public class Match {
     private Date date;
     @DatabaseField(dataType = DataType.SERIALIZABLE, useGetSet = true)
     private Location location;
+    @DatabaseField(dataType = DataType.BYTE_ARRAY) private byte[] image;
 
     // ----------------
     // CONSTRUCTORS
@@ -85,7 +86,9 @@ public class Match {
     public Player getLooser() { return looser; }
     public Date getDate() { return date; }
     public Location getLocation() { return location; }
-
+    public byte[] getImage() {
+        return image;
+    }
 
     // ----------------
     // SETTERS
@@ -95,4 +98,8 @@ public class Match {
     public void setLooser(Player looser) { this.looser = looser; }
     public void setDate(Date date) { this.date = date; }
     public void setLocation(Location location) { this.location = location; }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 }

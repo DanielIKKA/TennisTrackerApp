@@ -45,6 +45,8 @@
     <string name="game_2">Game 2</string>
     <string name="game_3">Game 3</string>
     <string name="statistics_theses_fields_are_not_requiere">Statistics (theses fields are not requiere)</string>
+    <string name="scores_please_set_to_0_0_last_set_if_not_played">Scores (please set to 0 0 last set if not played)</string>
+    <string name="new_match">NEW MATCH</string>
 
 
 </resources>
