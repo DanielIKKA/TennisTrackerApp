@@ -27,4 +27,6 @@
     <string name="scores_please_set_to_0_0_last_set_if_not_played" translatable="false">Score (mettre a 0 le dernier set si pas joué)</string>
     <string name="statistics_theses_fields_are_not_requiere" translatable="false">Stat (les champs suivants ne sont pas obigatoires</string>
     <string name="new_match" translatable="false">NOUVEAU MATCH</string>
+    <string name="view_more">Plus</string>
+    <string name="view_less">Moins</string>
 </resources>

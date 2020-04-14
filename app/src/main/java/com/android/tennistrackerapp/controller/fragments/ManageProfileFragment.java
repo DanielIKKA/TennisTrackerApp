@@ -250,7 +250,6 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
         // 2- Put it within db
         manager.getPlayerManager().update(player);
 
-        //TODO: Toast
         ToastAssistant.generalInstance.displayShortToast("Player Updated");
     }
 
@@ -268,8 +267,6 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
             editor.apply();
         }
 
-        //TODO: display Dialog and return to MainActivity
-
         Intent i = new Intent(this.getContext(), MainActivity.class);
         i.putExtra(context.getResources().getString(R.string.FROM_DELETE_OR_UPDATE), true);
         startActivity(i);
@@ -286,8 +283,6 @@ public class ManageProfileFragment extends Fragment implements View.OnClickListe
             editor.putInt(CURRENT_ID, player.getId());
             editor.apply();
         }
-
-        //TODO: display Dialog and return to MainActivity
 
         Intent i = new Intent(this.getContext(), MainActivity.class);
         i.putExtra(context.getResources().getString(R.string.FROM_DELETE_OR_UPDATE), true);

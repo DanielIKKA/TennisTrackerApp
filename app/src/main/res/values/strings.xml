@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">TennisTrackerApp</string>
 
     <!-- Profile Card Strings -->
@@ -34,11 +34,9 @@
     <string name="player_list_title" translatable="false">ALL PLAYERS</string>
     <string name="manage_profile_btn_current" translatable="false">CURRENT</string>
     <string name="statistics_title_default" translatable="false">Statistics</string>
-    <string name="statistics_default_name">name1</string>
+    <string name="statistics_default_name" tools:ignore="MissingTranslation">name1</string>
     <string name="menu_item_new_match" translatable="false">New match</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="new_match_winner" translatable="false">Winner</string>
     <string name="new_match_looser" translatable="false">Looser</string>
     <string name="game_1" translatable="false">Game 1</string>
@@ -47,6 +45,8 @@
     <string name="statistics_theses_fields_are_not_requiere" translatable="false">Statistics (theses fields are not requiere)</string>
     <string name="scores_please_set_to_0_0_last_set_if_not_played" translatable="false">Scores (please set to 0 0 last set if not played)</string>
     <string name="new_match" translatable="false">NEW MATCH</string>
+    <string name="view_more">View More</string>
+    <string name="view_less">View Less</string>
 
 
 </resources>

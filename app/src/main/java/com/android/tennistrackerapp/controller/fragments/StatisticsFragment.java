@@ -67,17 +67,7 @@ public class StatisticsFragment extends Fragment implements TaskManagerStat.List
     // -----------------------------------
     public static StatisticsFragment newInstance(Match match) {
         StatisticsFragment fragment = new StatisticsFragment();
-
-        // TODO: AsyncTask within onCreateView
         fragment.match = match;
-//        fragment.match = fragment.manager.getMatchManager().getById(match.getId());
-//
-//        fragment.statistics = fragment.manager.getMatchStatManager().getAllMatchWithMatchId(match.getId());
-//        fragment.statistics.get(0).setPlayer(fragment.manager.getPlayerManager().getById(fragment.statistics.get(0).getPlayer().getId()));
-//        fragment.statistics.get(1).setPlayer(fragment.manager.getPlayerManager().getById(fragment.statistics.get(1).getPlayer().getId()));
-//
-//        fragment.statMapped1 = MatchStat.getNewDictionary(fragment.statistics.get(0));
-//        fragment.statMapped2 = MatchStat.getNewDictionary(fragment.statistics.get(1));
         return fragment;
     }
 

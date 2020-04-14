@@ -73,10 +73,14 @@ public class DBManager {
             this.matchManager.createOne(match1); // Daniel - Victor
             this.matchManager.createOne(match2); // Rene - Daniel
 
-            MatchStat Stat1_1 = new MatchStat(match1, match1.getWinner());
-            MatchStat Stat1_2 = new MatchStat(match1, match1.getLooser());
-            MatchStat Stat2_1 = new MatchStat(match2, match2.getWinner());
-            MatchStat Stat2_2 = new MatchStat(match2, match2.getLooser());
+            MatchStat Stat1_1 = new MatchStat(match1, match1.getWinner(),3,2,(float)91.0,(float)100,7,2,
+                    6,4,6,6,0);
+            MatchStat Stat1_2 = new MatchStat(match1, match1.getLooser(), 3,6,(float)54.0,(float)90,1,0,
+                    6,2,4,3,0);
+            MatchStat Stat2_1 = new MatchStat(match2, match2.getWinner(),3,2,(float)91.0,(float)100,7,2,
+                    6,4,6,2,7);
+            MatchStat Stat2_2 = new MatchStat(match2, match2.getLooser(), 3,2,(float)91.0,(float)100,7,2,
+                    6,4,1,6,5);
             this.matchStatManager.createOne(Stat1_1);
             this.matchStatManager.createOne(Stat1_2);
             this.matchStatManager.createOne(Stat2_1);

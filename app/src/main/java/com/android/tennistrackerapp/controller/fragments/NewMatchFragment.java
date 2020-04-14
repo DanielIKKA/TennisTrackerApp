@@ -2,6 +2,7 @@ package com.android.tennistrackerapp.controller.fragments;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import com.android.tennistrackerapp.model.Player;
 import com.android.tennistrackerapp.model.ToastAssistant;
 import com.android.tennistrackerapp.model.database.DBManager;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
@@ -35,7 +37,7 @@ import static android.app.Activity.RESULT_OK;
  * A simple {@link Fragment} subclass.
  */
 public class NewMatchFragment extends Fragment
-        implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+        implements AdapterView.OnItemSelectedListener, View.OnClickListener, TaskNewMatch.Listeners {
 
     private static final int REQUEST_IMAGE_CAPTURE = 4242;
     // ---------------------
@@ -58,7 +60,7 @@ public class NewMatchFragment extends Fragment
     // ---------------------
     // PRIVATE ATTRIBUTES
     // ---------------------
-    private DBManager manager = DBManager.getInstance();
+    DBManager manager = DBManager.getInstance();
     private Player winner;
     private Player looser;
     private Match newMatch;
@@ -80,12 +82,7 @@ public class NewMatchFragment extends Fragment
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //TODO: AsyncTask for request all players
-        allPlayers = (ArrayList<Player>) manager.getPlayerManager().getAll();
-
-        for (Player player: allPlayers) {
-            allNames.add(player.getName());
-        }
+        new TaskNewMatch(this).execute();
     }
 
     @Override
@@ -95,7 +92,7 @@ public class NewMatchFragment extends Fragment
 
         findViews();
         setupUI();
-        setupSpinners();
+        //setupSpinners();
 
         btnCreate.setOnClickListener(this);
         image.setOnClickListener(this);
@@ -216,5 +213,42 @@ public class NewMatchFragment extends Fragment
             this.imageSaved = (Bitmap) extras.get("data");
             this.image.setImageBitmap(this.imageSaved);
         }
+    }
+
+    public void onPostExecuted() {
+        setupSpinners();
+    }
+}
+
+class TaskNewMatch extends AsyncTask<Void, Void, Void> {
+
+    public interface Listeners {
+        void onPostExecuted();
+    }
+
+    private final WeakReference<NewMatchFragment> callback;
+
+    TaskNewMatch(NewMatchFragment callback) {
+
+        this.callback = new WeakReference<>(callback);
+    }
+
+
+    @Override
+    protected Void doInBackground(Void... voids) {
+
+        callback.get().allPlayers = (ArrayList<Player>) callback.get().manager.getPlayerManager().getAll();
+
+        for (Player player: callback.get().allPlayers) {
+            callback.get().allNames.add(player.getName());
+        }
+
+        return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
+        this.callback.get().onPostExecuted();
     }
 }
