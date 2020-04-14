@@ -33,6 +33,20 @@
     <!-- List Players fragment -->
     <string name="player_list_title">ALL PLAYERS</string>
     <string name="manage_profile_btn_current">CURRENT</string>
+    <string name="statistics_title_default">Statistics</string>
+    <string name="statistics_default_name">name1</string>
+    <string name="menu_item_new_match">New match</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="new_match_winner">Winner</string>
+    <string name="new_match_looser">Looser</string>
+    <string name="game_1">Game 1</string>
+    <string name="game_2">Game 2</string>
+    <string name="game_3">Game 3</string>
+    <string name="statistics_theses_fields_are_not_requiere">Statistics (theses fields are not requiere)</string>
+    <string name="scores_please_set_to_0_0_last_set_if_not_played">Scores (please set to 0 0 last set if not played)</string>
+    <string name="new_match">NEW MATCH</string>
 
 
 </resources>

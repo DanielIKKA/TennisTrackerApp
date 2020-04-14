@@ -68,10 +68,19 @@ public class DBManager {
             this.playerManager.createOne(player2);
             this.playerManager.createOne(player3);
 
-            this.matchManager.createOne(new Match(player1, player2, new Date(), null)); // Daniel - Victor
-            this.matchManager.createOne(new Match(player2, player1, new Date(), null)); // Victor - Daniel
-            this.matchManager.createOne(new Match(player1, player3, new Date(), null)); // Daniel - Rene
-            this.matchManager.createOne(new Match(player2, player3, new Date(), null)); // Victor - Rene
+            Match match1 = new Match(player1, player2, new Date(), null);
+            Match match2 = new Match(player3, player1, new Date(), null);
+            this.matchManager.createOne(match1); // Daniel - Victor
+            this.matchManager.createOne(match2); // Rene - Daniel
+
+            MatchStat Stat1_1 = new MatchStat(match1, match1.getWinner());
+            MatchStat Stat1_2 = new MatchStat(match1, match1.getLooser());
+            MatchStat Stat2_1 = new MatchStat(match2, match2.getWinner());
+            MatchStat Stat2_2 = new MatchStat(match2, match2.getLooser());
+            this.matchStatManager.createOne(Stat1_1);
+            this.matchStatManager.createOne(Stat1_2);
+            this.matchStatManager.createOne(Stat2_1);
+            this.matchStatManager.createOne(Stat2_2);
 
             Log.d("DATABASE", "element inserted");
         }
